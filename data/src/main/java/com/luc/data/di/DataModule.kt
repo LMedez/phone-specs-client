@@ -4,21 +4,44 @@ import android.app.Application
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.luc.data.ApiServiceRepositoryImpl
 import com.luc.data.DomainRepositoryImpl
+import com.luc.data.LoginRepositoryImpl
 import com.luc.data.local.LocalDataSource
 import com.luc.data.local.LocalDatabase
 import com.luc.data.local.dao.FooDao
 import com.luc.data.local.dao.UserDao
+import com.luc.data.remote.api.ApiService
 import com.luc.data.remote.firebase.auth.AuthenticationDataSource
 import com.luc.data.remote.firebase.auth.AuthenticationDataSourceImpl
 import com.luc.data.remote.firebase.firestore.FirestoreData
 import com.luc.data.remote.firebase.firestore.FirestoreDataImpl
+import com.luc.domain.ApiServiceRepository
 import com.luc.domain.DomainRepository
+import com.luc.domain.LoginRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 val firebaseModule = module {
     single { FirebaseFirestore.getInstance() }
+}
+
+val retrofitModule = module {
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(NetworkConstant.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    fun provideApiService(retrofit: Retrofit) {
+        retrofit.create(ApiService::class.java)
+    }
+
+    single { provideRetrofit() }
+    single { provideApiService(get()) }
 }
 
 val roomModule = module {
@@ -50,6 +73,8 @@ val repositoryModule = module {
     }
     factory { LocalDataSource(get()) }
     factory<DomainRepository> { DomainRepositoryImpl(firestoreData = get(), get()) }
+    factory<LoginRepository> { LoginRepositoryImpl(firestoreData = get(), get(), get()) }
+    factory<ApiServiceRepository> { ApiServiceRepositoryImpl(get()) }
 }
 
 val authenticationModule = module {
@@ -57,4 +82,4 @@ val authenticationModule = module {
     single<AuthenticationDataSource> { AuthenticationDataSourceImpl(get()) }
 }
 
-val dataModule = listOf(repositoryModule, firebaseModule, roomModule, authenticationModule)
+val dataModule = listOf(repositoryModule, firebaseModule, roomModule, authenticationModule, retrofitModule)

@@ -1,17 +1,19 @@
 package com.luc.phonespecs.customviews
 
 import android.content.Context
+import android.content.res.Resources
 import android.content.res.TypedArray
 import android.text.InputType
 import android.util.AttributeSet
-import android.util.Log
 import android.util.Patterns
+import android.util.TypedValue
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.withStyledAttributes
-import androidx.core.widget.doOnTextChanged
 import com.luc.phonespecs.R
 import com.luc.phonespecs.databinding.CustomEditTextBinding
+import com.luc.phonespecs.utils.getDrawableOrNull
+
 
 class CustomEditText @JvmOverloads constructor(
     context: Context,
@@ -21,44 +23,78 @@ class CustomEditText @JvmOverloads constructor(
 
     private val binding = CustomEditTextBinding.inflate(LayoutInflater.from(context), this)
 
+    private var passwordVisibility = false
+
     init {
         context.withStyledAttributes(attrs, R.styleable.CustomEditText) {
             val typeEditText = getString(R.styleable.CustomEditText_typeEditText)
             val editTextHint = getString(R.styleable.CustomEditText_editTextHint)
             val inputType = getEnum(R.styleable.CustomEditText_inputType, EditTextInputType.DEFAULT)
+            if (inputType != EditTextInputType.PASSWORD)
+                binding.passwordVisibility.visibility = INVISIBLE
             when (inputType) {
                 EditTextInputType.NAME -> {
-                    binding.editText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+                    with(binding) {
+                        editText.inputType =
+                            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+                        editText.setOnFocusChangeListener { _, isFocused ->
+                            if (!isFocused) {
+                                if (editText.text.isEmpty()) {
+                                    editText.error = "Empty Name"
+                                }
+                            }
+                        }
+                    }
                 }
                 EditTextInputType.DEFAULT -> {}
                 EditTextInputType.PASSWORD -> {
-                    binding.editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    with(binding) {
+                        editText.setPadding(24.toPx(), 0, 42.toPx(), 0)
+                        editText.inputType =
+                            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
 
-
+                        editText.setOnFocusChangeListener { _, isFocused ->
+                            if (!isFocused) {
+                                if (!isValidPassword(editText.text.toString())) {
+                                    editText.error = "Invalid Password"
+                                }
+                            }
+                        }
+                    }
                 }
                 EditTextInputType.EMAIL -> {
-                    binding.editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-                    var text = ""
-                    binding.editText.setOnFocusChangeListener { view, hasFocused ->
-
-                        if (!hasFocused) {
-                            if (!text.isValidEmail())
-                                Log.d("tests", "Invalid Email")
-                        } else {
-                            binding.editText.doOnTextChanged { texts, start, count, after ->
-                                text = texts.toString()
+                    with(binding) {
+                        editText.inputType =
+                            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                        editText.setOnFocusChangeListener { _, isFocused ->
+                            if (!isFocused) {
+                                if (!editText.text.toString().isValidEmail()) {
+                                    editText.error = "Invalid Email"
+                                }
                             }
                         }
                     }
                 }
             }
 
+            binding.passwordVisibility.setOnClickListener {
+                passwordVisibility = !passwordVisibility
+                if (passwordVisibility) {
+                    binding.editText.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    it.background = context.getDrawableOrNull(R.drawable.ic_visibility)
+                } else {
+                    binding.editText.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    it.background =
+                        context.getDrawableOrNull(R.drawable.ic_visibility_off)
+                }
+            }
+
             binding.typeEditText.text = typeEditText
             binding.editText.hint = editTextHint
         }
-
     }
-
 }
 
 enum class EditTextInputType(i: Int) {
@@ -75,3 +111,18 @@ inline fun <reified T : Enum<T>> TypedArray.getEnum(index: Int, default: T) =
 
 fun CharSequence?.isValidEmail() =
     !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+fun isValidPassword(password: String?): Boolean {
+    password?.let {
+        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$"
+        val passwordMatcher = Regex(passwordPattern)
+
+        return passwordMatcher.find(password) != null
+    } ?: return false
+}
+
+fun Number.toPx() = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    this.toFloat(),
+    Resources.getSystem().displayMetrics
+).toInt()

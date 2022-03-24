@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:paddingEnd="@dimen/grid_3"
         android:layout_marginBottom="@dimen/grid_1"
         android:id="@+id/editText"
         style="@style/Widget.App.EditText"
@@ -25,7 +26,6 @@
         android:layout_marginTop="@dimen/grid_1"
         android:background="@drawable/edit_text_stroke_color"
         android:hint="@string/app_name"
-        android:inputType="textEmailAddress"
         android:paddingStart="@dimen/grid_3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,5 +34,14 @@
 
     </EditText>
 
+    <ImageButton
+        android:id="@+id/passwordVisibility"
+        android:layout_marginEnd="@dimen/grid_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_visibility_off"
+        app:layout_constraintBottom_toBottomOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText"/>
 
 </merge>
