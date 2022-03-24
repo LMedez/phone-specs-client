@@ -2,12 +2,15 @@ package com.luc.data.di
 
 import android.app.Application
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.luc.data.DomainRepositoryImpl
 import com.luc.data.local.LocalDataSource
 import com.luc.data.local.LocalDatabase
 import com.luc.data.local.dao.FooDao
 import com.luc.data.local.dao.UserDao
+import com.luc.data.remote.firebase.auth.AuthenticationDataSource
+import com.luc.data.remote.firebase.auth.AuthenticationDataSourceImpl
 import com.luc.data.remote.firebase.firestore.FirestoreData
 import com.luc.data.remote.firebase.firestore.FirestoreDataImpl
 import com.luc.domain.DomainRepository
@@ -49,4 +52,9 @@ val repositoryModule = module {
     factory<DomainRepository> { DomainRepositoryImpl(firestoreData = get(), get()) }
 }
 
-val dataModule = listOf(repositoryModule, firebaseModule, roomModule)
+val authenticationModule = module {
+    single { FirebaseAuth.getInstance() }
+    single<AuthenticationDataSource> { AuthenticationDataSourceImpl(get()) }
+}
+
+val dataModule = listOf(repositoryModule, firebaseModule, roomModule, authenticationModule)

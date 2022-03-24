@@ -1,4 +1,4 @@
-package com.luc.basicstartmodularappandroid.utils
+package com.luc.phonespecs.utils
 
 import java.util.*
 

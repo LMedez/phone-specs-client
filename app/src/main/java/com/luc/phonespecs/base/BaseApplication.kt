@@ -1,4 +1,4 @@
-package com.luc.basicstartmodularappandroid.base
+package com.luc.phonespecs.base
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate

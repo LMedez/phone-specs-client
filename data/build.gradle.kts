@@ -17,6 +17,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":common"))
     implementation(platform(Deps.Firebase.BOM))
+    implementation(Deps.Firebase.AUTH)
     implementation(Deps.Firebase.FIRESTORE)
     implementation(Deps.Firebase.COROUTINES)
     implementation(Deps.Koin.ANDROID)
