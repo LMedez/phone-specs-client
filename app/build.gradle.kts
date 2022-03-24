@@ -2,6 +2,8 @@ plugins {
     id(ModulePlugins.ANDROID_APPLICATION)
     kotlin("android")
     kotlin("kapt")
+    id(ModulePlugins.SAFE_ARGS)
+
 }
 
 android {
@@ -31,6 +33,7 @@ dependencies {
     implementation(Deps.Koin.ANDROID)
 
     implementation(Deps.Glide.GLIDE)
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     kapt(Deps.Glide.PROCESSOR)
 
 }

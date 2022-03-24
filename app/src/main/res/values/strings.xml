@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">Basic start modular app android</string>
+    <string name="app_name">Phone Spec</string>
+    <string name="greeting">Hello</string>
+    <string name="create_account">Create an account to continue</string>
+    <string name="create_account_button">Create an account</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="register_account">Register account</string>
+    <string name="welcome">Welcome back !</string>
+    <string name="google">Google</string>
+    <string name="login">Login account</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="hello_there_login_to_continue">Hello there, login to continue</string>
 </resources>

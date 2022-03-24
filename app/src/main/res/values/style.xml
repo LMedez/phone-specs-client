@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.App.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
+        <item name="hintTextColor">@color/color_primary_dark_alpha</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:minHeight">60dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
+    </style>
+
+    <style name="Widget.App.Button.Google" parent="Widget.App.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button.Google</item>
+    </style>
+
+
+    <style name="Widget.App.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:minHeight">60dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
+    </style>
+</resources>

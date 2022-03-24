@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomEditText">
+        <attr name="editTextHint" format="string"/>
+        <attr name="inputType" format="enum">
+            <enum name="NAME" value="0"/>
+            <enum name="PASSWORD" value="1"/>
+            <enum name="EMAIL" value="2"/>
+        </attr>
+        <attr name="typeEditText" format="string"/>
+    </declare-styleable>
+</resources>

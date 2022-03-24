@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.luc.phonespecs.login.RegisterLoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signInLoginFragment"
+            app:destination="@id/signInLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInLoginFragment"
+        android:name="com.luc.phonespecs.login.SignInLoginFragment"
+        android:label="fragment_sign_in_login"
+        tools:layout="@layout/fragment_sign_in_login" />
+</navigation>

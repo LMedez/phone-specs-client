@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/typeEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_1"
+        android:text="Your name"
+        android:textAppearance="?attr/textAppearanceSubtitle2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_marginBottom="@dimen/grid_1"
+        android:id="@+id/editText"
+        style="@style/Widget.App.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="@dimen/grid_1"
+        android:background="@drawable/edit_text_stroke_color"
+        android:hint="@string/app_name"
+        android:inputType="textEmailAddress"
+        android:paddingStart="@dimen/grid_3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typeEditText">
+
+    </EditText>
+
+
+</merge>
