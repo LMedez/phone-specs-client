@@ -2,17 +2,16 @@ package com.luc.phonespecs.customviews
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.text.InputType.TYPE_CLASS_TEXT
-import android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
-import android.view.textclassifier.TextClassifier.TYPE_EMAIL
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.withStyledAttributes
+import androidx.core.widget.doOnTextChanged
 import com.luc.phonespecs.R
 import com.luc.phonespecs.databinding.CustomEditTextBinding
-import android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
 
 class CustomEditText @JvmOverloads constructor(
     context: Context,
@@ -26,18 +25,33 @@ class CustomEditText @JvmOverloads constructor(
         context.withStyledAttributes(attrs, R.styleable.CustomEditText) {
             val typeEditText = getString(R.styleable.CustomEditText_typeEditText)
             val editTextHint = getString(R.styleable.CustomEditText_editTextHint)
-            val inputType = getEnum(R.styleable.CustomEditText_inputType, InputType.DEFAULT)
-
-
-            when(inputType) {
-                InputType.NAME -> {
-                    binding.editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            val inputType = getEnum(R.styleable.CustomEditText_inputType, EditTextInputType.DEFAULT)
+            when (inputType) {
+                EditTextInputType.NAME -> {
+                    binding.editText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
                 }
-                InputType.DEFAULT -> TODO()
-                InputType.PASSWORD -> TODO()
-                InputType.EMAIL -> TODO()
-            }
+                EditTextInputType.DEFAULT -> {}
+                EditTextInputType.PASSWORD -> {
+                    binding.editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
 
+
+                }
+                EditTextInputType.EMAIL -> {
+                    binding.editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    var text = ""
+                    binding.editText.setOnFocusChangeListener { view, hasFocused ->
+
+                        if (!hasFocused) {
+                            if (!text.isValidEmail())
+                                Log.d("tests", "Invalid Email")
+                        } else {
+                            binding.editText.doOnTextChanged { texts, start, count, after ->
+                                text = texts.toString()
+                            }
+                        }
+                    }
+                }
+            }
 
             binding.typeEditText.text = typeEditText
             binding.editText.hint = editTextHint
@@ -47,14 +61,17 @@ class CustomEditText @JvmOverloads constructor(
 
 }
 
-public enum class InputType(i: Int) {
-    DEFAULT(99),
-    NAME(0),
-    PASSWORD(1),
-    EMAIL(2)
+enum class EditTextInputType(i: Int) {
+    DEFAULT(0),
+    NAME(1),
+    PASSWORD(2),
+    EMAIL(3)
 }
 
 inline fun <reified T : Enum<T>> TypedArray.getEnum(index: Int, default: T) =
     getInt(index, -1).let {
         if (it >= 0) enumValues<T>()[it] else default
     }
+
+fun CharSequence?.isValidEmail() =
+    !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()

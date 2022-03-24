@@ -78,7 +78,6 @@ class AuthenticationDataSourceImpl(private val firebaseAuth: FirebaseAuth) :
                     // Handle error -> task.getException();
                 }
             }
-
     }
 
     fun checkUserLoggedIn(): UserProfile? {

@@ -22,5 +22,7 @@ dependencies {
     implementation(Deps.Firebase.COROUTINES)
     implementation(Deps.Koin.ANDROID)
     implementation(Deps.AndroidX.Room.ROOM_KTX)
+    implementation(Deps.Retrofit.CORE)
+    implementation(Deps.Retrofit.GSON)
     kapt(Deps.AndroidX.Room.COMPILER)
 }

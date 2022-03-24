@@ -91,6 +91,12 @@ object Deps {
         const val ANDROID = "io.insert-koin:koin-android:$VERSION"
     }
 
+    object Retrofit {
+        private const val VERSION = "2.9.0"
+        const val CORE = "com.squareup.retrofit2:retrofit:$VERSION"
+        const val GSON = "com.squareup.retrofit2:converter-gson:$VERSION"
+    }
+
     object Firebase {
         private const val VERSION = "29.0.3"
         const val BOM = "com.google.firebase:firebase-bom:$VERSION"
