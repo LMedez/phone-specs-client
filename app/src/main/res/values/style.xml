@@ -5,6 +5,10 @@
         <item name="hintTextColor">@color/color_primary_dark_alpha</item>
     </style>
 
+    <style name="Widget.App.LinearProgressIndicator" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>
+    </style>
+
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:minHeight">60dp</item>
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>

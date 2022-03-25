@@ -5,8 +5,6 @@ import com.luc.common.model.User
 import com.luc.common.model.UserProfile
 
 interface LoginRepository {
-    suspend fun getUser(id: String): User
-
     suspend fun signInWithEmailAndPassword(
         email: String,
         password: String
@@ -18,4 +16,8 @@ interface LoginRepository {
     ): NetworkStatus<UserProfile>
 
     suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile>
+
+    suspend fun getUserLogged(): UserProfile?
+
+
 }

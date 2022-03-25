@@ -1,10 +1,9 @@
 package com.luc.data.remote.firebase.auth
 
-import android.util.Log
-import androidx.annotation.NonNull
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.luc.common.NetworkStatus
 import com.luc.common.model.ProviderType
 import com.luc.common.model.UserProfile
@@ -66,21 +65,7 @@ class AuthenticationDataSourceImpl(private val firebaseAuth: FirebaseAuth) :
         }
     }
 
-    init {
-        firebaseAuth.currentUser?.getIdToken(true)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val idToken: String = task.result?.token!!
-                    Log.d("tests", idToken)
-                    // Send token to your backend via HTTPS
-                    // ...
-                } else {
-                    // Handle error -> task.getException();
-                }
-            }
-    }
-
-    fun checkUserLoggedIn(): UserProfile? {
+    override suspend fun getUserLogged(): UserProfile? {
         return if (firebaseAuth.currentUser == null) {
             null
         } else {
@@ -93,7 +78,7 @@ class AuthenticationDataSourceImpl(private val firebaseAuth: FirebaseAuth) :
     }
 }
 
-fun FirebaseUser.asUserProfile(): UserProfile {
+suspend fun FirebaseUser.asUserProfile(): UserProfile {
     var provider: ProviderType = ProviderType.BASIC
     var userName = ""
     providerData.forEach {
@@ -101,18 +86,10 @@ fun FirebaseUser.asUserProfile(): UserProfile {
         userName = it.displayName ?: "No Username"
     }
 
-    val token = getIdToken(true)
-        .addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val idToken: String = task.result?.token!!
-                // Send token to your backend via HTTPS
-                // ...
-            } else {
-                // Handle error -> task.getException();
-            }
-        }
+    val token = getIdToken(true).await().token
+
     return UserProfile(
-        this.uid, token.result?.token?:"no token", userName, this.email ?: "No email", this.photoUrl, provider
+        this.uid, token ?: "no token", userName, this.email ?: "No email", this.photoUrl, provider
     )
 
 }

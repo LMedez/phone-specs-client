@@ -2,6 +2,7 @@ plugins {
     id(ModulePlugins.ANDROID_APPLICATION)
     kotlin("android")
     kotlin("kapt")
+    id(ModulePlugins.GOOGLE_SERVICES)
     id(ModulePlugins.SAFE_ARGS)
 
 }
@@ -30,6 +31,8 @@ dependencies {
     implementation(Deps.AndroidX.AppCompat.APPCOMPAT)
     implementation(Deps.Google.Material.MATERIAL)
     implementation(Deps.AndroidX.ConstraintLayout.CL)
+    implementation(Deps.Firebase.AUTH)
+    implementation(Deps.Google.PlayCore.PLAY_SERVICES)
     implementation(Deps.Koin.ANDROID)
 
     implementation(Deps.Glide.GLIDE)

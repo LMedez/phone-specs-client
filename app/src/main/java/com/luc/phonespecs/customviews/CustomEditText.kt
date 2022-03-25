@@ -14,7 +14,6 @@ import com.luc.phonespecs.R
 import com.luc.phonespecs.databinding.CustomEditTextBinding
 import com.luc.phonespecs.utils.getDrawableOrNull
 
-
 class CustomEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -22,7 +21,6 @@ class CustomEditText @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding = CustomEditTextBinding.inflate(LayoutInflater.from(context), this)
-
     private var passwordVisibility = false
 
     init {
@@ -32,7 +30,9 @@ class CustomEditText @JvmOverloads constructor(
             val inputType = getEnum(R.styleable.CustomEditText_inputType, EditTextInputType.DEFAULT)
             if (inputType != EditTextInputType.PASSWORD)
                 binding.passwordVisibility.visibility = INVISIBLE
+
             when (inputType) {
+                EditTextInputType.DEFAULT -> {}
                 EditTextInputType.NAME -> {
                     with(binding) {
                         editText.inputType =
@@ -46,7 +46,7 @@ class CustomEditText @JvmOverloads constructor(
                         }
                     }
                 }
-                EditTextInputType.DEFAULT -> {}
+
                 EditTextInputType.PASSWORD -> {
                     with(binding) {
                         editText.setPadding(24.toPx(), 0, 42.toPx(), 0)
@@ -62,6 +62,7 @@ class CustomEditText @JvmOverloads constructor(
                         }
                     }
                 }
+
                 EditTextInputType.EMAIL -> {
                     with(binding) {
                         editText.inputType =

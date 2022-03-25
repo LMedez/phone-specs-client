@@ -13,9 +13,6 @@ class LoginRepositoryImpl(
     private val authenticationDataSource: AuthenticationDataSource,
     private val localDataSource: LocalDataSource
 ) : LoginRepository {
-    override suspend fun getUser(id: String): User {
-        return localDataSource.getUser(id)
-    }
 
     override suspend fun signInWithEmailAndPassword(
         email: String,
@@ -33,6 +30,10 @@ class LoginRepositoryImpl(
 
     override suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile> {
         return authenticationDataSource.signInWithGoogle(token)
+    }
+
+    override suspend fun getUserLogged(): UserProfile? {
+        return authenticationDataSource.getUserLogged()
     }
 
 }

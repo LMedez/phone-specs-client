@@ -15,4 +15,6 @@ interface AuthenticationDataSource {
     ): NetworkStatus<UserProfile>
 
     suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile>
+
+    suspend fun getUserLogged(): UserProfile?
 }

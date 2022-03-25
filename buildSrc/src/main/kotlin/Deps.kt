@@ -74,6 +74,7 @@ object Deps {
             private const val VERSION = "1.10.3"
             const val CORE = "com.google.android.play:core:$VERSION"
             const val KTX = "com.google.android.play:core-ktx:1.8.1"
+            const val PLAY_SERVICES = "com.google.android.gms:play-services-auth:20.1.0"
         }
     }
 
