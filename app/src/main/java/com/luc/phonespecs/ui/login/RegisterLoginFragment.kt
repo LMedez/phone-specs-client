@@ -1,16 +1,11 @@
 package com.luc.phonespecs.ui.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.luc.phonespecs.R
 import com.luc.phonespecs.base.BaseFragment
-import com.luc.phonespecs.databinding.FragmentLoginBinding
+import com.luc.phonespecs.databinding.FragmentRegisterLoginBinding
 
-class RegisterLoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
+class RegisterLoginFragment : BaseFragment<FragmentRegisterLoginBinding>(FragmentRegisterLoginBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -2,6 +2,7 @@ package com.luc.phonespecs.ui.login
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,7 +25,6 @@ class SignInLoginFragment :
     private val loginViewModel: LoginViewModel by viewModel()
     private lateinit var googleSignInClient: GoogleSignInClient
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -39,6 +39,13 @@ class SignInLoginFragment :
 
         binding.signUp.setOnClickListener {
             findNavController().navigate(SignInLoginFragmentDirections.actionSignInLoginFragmentToLoginFragment())
+        }
+
+        binding.login.setOnClickListener {
+            if (binding.emailInput.editTextHasError() or binding.passwordInput.editTextHasError()) {
+                Log.d("tests", "error")
+            }
+
         }
 
         binding.googleSignIn.setOnClickListener {

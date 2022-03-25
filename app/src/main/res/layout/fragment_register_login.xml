@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:paddingTopSystemWindowInsets="@{true}"
-        app:paddingBottomSystemWindowInsets="@{true}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.login.SignInLoginFragment">
+        app:paddingBottomSystemWindowInsets="@{true}"
+        app:paddingTopSystemWindowInsets="@{true}"
+        tools:context=".ui.login.RegisterLoginFragment">
 
         <FrameLayout
+
             android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -36,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/grid_2"
-            android:text="@string/sign_in"
+            android:text="@string/register_account"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +72,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/welcome"
+                    android:text="@string/greeting"
                     android:textAppearance="?attr/textAppearanceHeadline5" />
 
                 <TextView
@@ -81,22 +80,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/grid_1"
                     android:layout_marginBottom="@dimen/grid_2"
-                    android:text="@string/hello_there_login_to_continue"
+                    android:text="@string/create_account"
                     android:textAppearance="?attr/textAppearanceBody2" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/googleSignIn"
-                    style="@style/Widget.App.Button.Google"
-                    android:layout_width="wrap_content"
+                <com.luc.phonespecs.customviews.CustomEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/grid_2"
-                    android:text="@string/google"
-                    app:icon="@drawable/google_icon"
-                    app:iconTint="@null" />
-
+                    app:editTextHint="Full name"
+                    app:inputType="NAME"
+                    app:typeEditText="Your name" />
 
                 <com.luc.phonespecs.customviews.CustomEditText
-                    android:id="@+id/emailInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:editTextHint="Your email adress"
@@ -104,7 +98,6 @@
                     app:typeEditText="Email adress" />
 
                 <com.luc.phonespecs.customviews.CustomEditText
-                    android:id="@+id/passwordInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:editTextHint="Password"
@@ -121,14 +114,14 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/login"
+                    android:id="@+id/createAccount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/grid_6"
                     android:layout_marginEnd="@dimen/grid_6"
                     android:gravity="center"
-                    android:text="@string/login" />
+                    android:text="@string/create_account_button" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,33 +131,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/no_account"
+                        android:text="@string/have_account"
                         android:textAppearance="?attr/textAppearanceBody2" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/signUp"
+                        android:id="@+id/signIn"
                         style="@style/Widget.App.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/grid_1"
-                        android:text="@string/sign_up"
+                        android:text="@string/sign_in"
                         android:textAppearance="?attr/textAppearanceBody2" />
 
                 </LinearLayout>
             </LinearLayout>
-
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/loading"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/grid_3"
-                android:layout_marginTop="@dimen/grid_2"
-                android:layout_marginEnd="@dimen/grid_3"
-                android:indeterminate="true"
-                android:visibility="invisible"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

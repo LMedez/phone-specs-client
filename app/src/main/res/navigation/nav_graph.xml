@@ -9,7 +9,7 @@
         android:id="@+id/navContainer"
         android:name="com.luc.phonespecs.ui.login.RegisterLoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_register_login" >
         <action
             android:id="@+id/action_navContainer_to_homeFragment"
             app:destination="@id/homeFragment" />

@@ -19,9 +19,9 @@ class SplashScreenFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        exitTransition = MaterialFadeThrough().setDuration(600).addTarget(binding.root)
+        exitTransition = MaterialFadeThrough().setDuration(1000).addTarget(binding.root)
 
-        binding.root.doOnLayout {
+        binding.root.postDelayed({
             loginViewModel.getUserLogged().observe(viewLifecycleOwner) {
                 if (it != null) {
                     findNavController().navigate(
@@ -34,7 +34,7 @@ class SplashScreenFragment :
                 }
 
             }
-        }
+        },1000)
 
     }
 }

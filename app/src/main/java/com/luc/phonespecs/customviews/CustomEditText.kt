@@ -96,6 +96,11 @@ class CustomEditText @JvmOverloads constructor(
             binding.editText.hint = editTextHint
         }
     }
+
+    fun editTextHasError() : Boolean {
+        binding.editText.clearFocus()
+        return binding.editText.error != null
+    }
 }
 
 enum class EditTextInputType(i: Int) {
