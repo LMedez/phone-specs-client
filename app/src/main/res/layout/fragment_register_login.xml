@@ -62,12 +62,15 @@
 
 
             <LinearLayout
+                android:layout_marginEnd="@dimen/grid_3"
+                android:layout_marginStart="@dimen/grid_3"
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/grid_3"
                 android:layout_marginTop="@dimen/grid_3"
-                android:layout_marginEnd="@dimen/grid_3"
                 android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -108,14 +111,20 @@
                     app:inputType="PASSWORD"
                     app:typeEditText="Password" />
 
-                <TextView
-                    android:id="@+id/invalidUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAppearance="?attr/errorTextAppearance" />
 
             </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/invalidUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:textAppearance="?attr/errorTextAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
             <LinearLayout
                 android:layout_width="match_parent"

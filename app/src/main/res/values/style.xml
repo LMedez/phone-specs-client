@@ -19,6 +19,14 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button.Google</item>
     </style>
 
+    <style name="Widget.App.Button.Anonymous" parent="Widget.App.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button.Anonymous</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+    </style>
+
 
     <style name="Widget.App.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:minHeight">60dp</item>

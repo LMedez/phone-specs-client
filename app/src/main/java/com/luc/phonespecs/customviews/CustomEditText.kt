@@ -3,6 +3,7 @@ package com.luc.phonespecs.customviews
 import android.content.Context
 import android.content.res.Resources
 import android.content.res.TypedArray
+import android.text.InputFilter
 import android.text.InputType
 import android.util.AttributeSet
 import android.util.Patterns
@@ -32,10 +33,15 @@ class CustomEditText @JvmOverloads constructor(
             if (inputType != EditTextInputType.PASSWORD)
                 binding.passwordVisibility.visibility = INVISIBLE
 
+
             when (inputType) {
-                EditTextInputType.DEFAULT -> {}
+                EditTextInputType.DEFAULT -> {
+                    binding.editText.filters = arrayOf(InputFilter.LengthFilter(15))
+                }
+
                 EditTextInputType.NAME -> {
                     with(binding) {
+                        editText.filters = arrayOf(InputFilter.LengthFilter(15))
                         editText.inputType =
                             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
                         editText.setOnFocusChangeListener { _, isFocused ->
@@ -97,6 +103,11 @@ class CustomEditText @JvmOverloads constructor(
             binding.editText.hint = editTextHint
         }
     }
+
+    fun setTypeEditText(typeEditTExt: String) {
+        binding.typeEditText.text = typeEditTExt
+    }
+
 
     fun editTextHasError(): Boolean {
         binding.editText.clearFocus()

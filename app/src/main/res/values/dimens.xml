@@ -10,4 +10,5 @@
     <dimen name="grid_6">62dp</dimen>
 
     <dimen name="corner_radius_4">50dp</dimen>
+    <dimen name="corner_radius_1">16dp</dimen>
 </resources>

@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:paddingTopSystemWindowInsets="@{true}"
-        app:paddingBottomSystemWindowInsets="@{true}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:paddingBottomSystemWindowInsets="@{true}"
+        app:paddingTopSystemWindowInsets="@{true}"
         tools:context=".ui.login.SignInLoginFragment">
 
         <FrameLayout
@@ -84,15 +84,29 @@
                     android:text="@string/hello_there_login_to_continue"
                     android:textAppearance="?attr/textAppearanceBody2" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/googleSignIn"
-                    style="@style/Widget.App.Button.Google"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/grid_2"
-                    android:text="@string/google"
-                    app:icon="@drawable/google_icon"
-                    app:iconTint="@null" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/googleSignIn"
+                        style="@style/Widget.App.Button.Google"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/grid_2"
+                        android:text="@string/google"
+                        app:icon="@drawable/google_icon"
+                        app:iconTint="@null" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/anonymous"
+                        style="@style/Widget.App.Button.Anonymous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/grid_2"
+                        android:text="Anonymous"
+                        app:icon="@drawable/ic_account" />
+                </LinearLayout>
 
 
                 <com.luc.phonespecs.customviews.CustomEditText
@@ -113,10 +127,10 @@
 
                 <TextView
                     android:id="@+id/invalidUser"
-                    android:textAppearance="?attr/errorTextAppearance"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAppearance="?attr/errorTextAppearance" />
 
             </LinearLayout>
 

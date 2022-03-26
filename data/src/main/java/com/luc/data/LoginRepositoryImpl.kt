@@ -26,11 +26,15 @@ class LoginRepositoryImpl(
         email: String,
         password: String
     ): NetworkStatus<UserProfile> {
-        return authenticationDataSource.signUpWithEmailAndPassword(email, password, fullName)
+        return authenticationDataSource.signUpWithEmailAndPassword(fullName, email, password)
     }
 
     override suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile> {
         return authenticationDataSource.signInWithGoogle(token)
+    }
+
+    override suspend fun signInAnonymous(userName: String): NetworkStatus<UserProfile> {
+        return authenticationDataSource.signInAnonymous(userName)
     }
 
     override suspend fun getUserLogged(): UserProfile? {

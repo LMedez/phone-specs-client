@@ -16,10 +16,12 @@ class LoginUseCase(private val loginRepository: LoginRepository) {
         email: String,
         password: String
     ): NetworkStatus<UserProfile> =
-        loginRepository.signUpWithEmailAndPassword(email, password, fullName)
+        loginRepository.signUpWithEmailAndPassword(fullName, email, password)
 
     suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile> =
         loginRepository.signInWithGoogle(token)
+
+    suspend fun signInAnonymous(userName :String) = loginRepository.signInAnonymous(userName)
 
     suspend fun getUserLogged() = loginRepository.getUserLogged()
 

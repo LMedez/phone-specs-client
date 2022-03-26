@@ -14,4 +14,5 @@ dependencies {
     implementation(Deps.Kotlinx.Coroutines.CORE)
     implementation(Deps.AndroidX.Lifecycle.VIEWMODEL_KTX)
     implementation(Deps.AndroidX.Lifecycle.LIVEDATA_KTX)
+    implementation(Deps.Google.PlayCore.PLAY_SERVICES)
 }

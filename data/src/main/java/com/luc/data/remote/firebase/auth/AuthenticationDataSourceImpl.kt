@@ -1,10 +1,8 @@
 package com.luc.data.remote.firebase.auth
 
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.*
 import com.luc.common.NetworkStatus
 import com.luc.common.model.ProviderType
 import com.luc.common.model.UserProfile
@@ -50,7 +48,7 @@ class AuthenticationDataSourceImpl(
                 "The user is null"
             )
             firestoreData.addUserProfile(data.user!!.asUserProfile(fullName))
-            NetworkStatus.Success(data.user!!.asUserProfile())
+            NetworkStatus.Success(data.user!!.asUserProfile(fullName))
         } catch (e: FirebaseAuthException) {
             NetworkStatus.Error(e, e.message ?: "An Error occurred")
         }
@@ -75,6 +73,23 @@ class AuthenticationDataSourceImpl(
         }
     }
 
+    override suspend fun signInAnonymous(userName: String): NetworkStatus<UserProfile> {
+        return try {
+            val data = firebaseAuth.signInAnonymously().await()
+
+            if (data.user != null) {
+                if (data.additionalUserInfo?.isNewUser == true) {
+                    firestoreData.addUserProfile(data.user!!.asUserProfile(userName))
+                }
+            } else return NetworkStatus.Error(NullPointerException(), "Null user")
+
+            NetworkStatus.Success(data.user!!.asUserProfile(userName))
+        } catch (e: FirebaseException) {
+            return NetworkStatus.Error(e, e.message ?: "User Error")
+        }
+
+    }
+
     override suspend fun getUserLogged(): UserProfile? {
         return if (firebaseAuth.currentUser == null) {
             null
@@ -95,13 +110,20 @@ class AuthenticationDataSourceImpl(
 
 fun FirebaseUser.asUserProfile(displayName: String = ""): UserProfile {
     var provider: ProviderType = ProviderType.BASIC
-    var userName = ""
     providerData.forEach {
-        if (it.providerId == "google.com") provider = ProviderType.GOOGLE
-        userName = it.displayName ?: displayName
+        GoogleAuthProvider.PROVIDER_ID
+        provider = when (it.providerId) {
+            GoogleAuthProvider.PROVIDER_ID -> ProviderType.GOOGLE
+            EmailAuthProvider.PROVIDER_ID -> ProviderType.BASIC
+            else -> ProviderType.ANONYMOUS
+        }
     }
     return UserProfile(
-        this.uid, userName, this.email ?: "No email", this.photoUrl.toString(), provider
+        this.uid,
+        this.displayName ?: displayName,
+        this.email,
+        this.photoUrl.toString(),
+        provider
     )
 
 }

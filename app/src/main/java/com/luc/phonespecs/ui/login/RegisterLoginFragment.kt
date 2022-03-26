@@ -7,13 +7,14 @@ import com.luc.common.NetworkStatus
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentRegisterLoginBinding
 import com.luc.presentation.viewmodel.LoginViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.log
 
 class RegisterLoginFragment :
     BaseFragment<FragmentRegisterLoginBinding>(FragmentRegisterLoginBinding::inflate) {
 
-    private val loginViewModel: LoginViewModel by viewModel()
+    private val loginViewModel: LoginViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -12,14 +12,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.luc.common.NetworkStatus
 import com.luc.phonespecs.R
 import com.luc.phonespecs.base.BaseFragment
+import com.luc.phonespecs.customviews.CustomEditText
+import com.luc.phonespecs.databinding.CustomEditTextBinding
 import com.luc.phonespecs.databinding.FragmentSignInLoginBinding
 import com.luc.presentation.viewmodel.LoginViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
@@ -27,8 +31,7 @@ import java.lang.Exception
 class SignInLoginFragment :
     BaseFragment<FragmentSignInLoginBinding>(FragmentSignInLoginBinding::inflate) {
 
-    private val loginViewModel: LoginViewModel by viewModel()
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private val loginViewModel: LoginViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +39,8 @@ class SignInLoginFragment :
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
+        loginViewModel.googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +48,37 @@ class SignInLoginFragment :
 
         binding.signUp.setOnClickListener {
             findNavController().navigate(SignInLoginFragmentDirections.actionSignInLoginFragmentToLoginFragment())
+        }
+
+        binding.anonymous.setOnClickListener {
+            val editText = CustomEditText(requireContext())
+            editText.setTypeEditText("User name")
+            MaterialAlertDialogBuilder(requireContext())
+                .setView(editText)
+                .setPositiveButton(resources.getString(R.string.sign_in)) { dialog, which ->
+                    loginViewModel.signInAnonymous(editText.getEditText().text.toString())
+                        .observe(viewLifecycleOwner) {
+                            when (it) {
+                                NetworkStatus.Loading -> binding.loading.show()
+                                is NetworkStatus.Error -> {
+                                    binding.loading.hide()
+                                }
+                                is NetworkStatus.Success -> {
+                                    binding.loading.hide()
+                                    findNavController().navigate(
+                                        SignInLoginFragmentDirections.actionSignInLoginFragmentToHomeFragment(
+                                            it.data
+                                        )
+                                    )
+
+                                }
+                            }
+                        }
+                }
+                .setNegativeButton(resources.getString(R.string.cancel)) { dialog, which ->
+                    // Respond to negative button press
+                }
+                .show()
         }
 
         binding.login.setOnClickListener {
@@ -60,7 +95,8 @@ class SignInLoginFragment :
                         }
                         is NetworkStatus.Error -> {
                             binding.loading.hide()
-                            binding.invalidUser.text = getErrorMessage(it.exception as FirebaseAuthException)
+                            binding.invalidUser.text =
+                                getErrorMessage(it.exception as FirebaseAuthException)
                         }
                         is NetworkStatus.Success -> {
                             binding.loading.hide()
@@ -73,11 +109,10 @@ class SignInLoginFragment :
                     }
                 }
             }
-
         }
 
         binding.googleSignIn.setOnClickListener {
-            getContent.launch(googleSignInClient.signInIntent)
+            getContent.launch(loginViewModel.googleSignInClient?.signInIntent)
         }
     }
 
@@ -119,7 +154,11 @@ class SignInLoginFragment :
                                         )
                                     }
                                     is NetworkStatus.Error -> {
-                                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                                        Toast.makeText(
+                                            requireContext(),
+                                            it.message,
+                                            Toast.LENGTH_SHORT
+                                        )
                                             .show()
                                         binding.loading.hide()
                                     }
