@@ -1,5 +1,6 @@
 package com.luc.data.remote.firebase.auth
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
@@ -7,10 +8,14 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.luc.common.NetworkStatus
 import com.luc.common.model.ProviderType
 import com.luc.common.model.UserProfile
+import com.luc.data.remote.firebase.firestore.FirestoreData
 import kotlinx.coroutines.tasks.await
 
 
-class AuthenticationDataSourceImpl(private val firebaseAuth: FirebaseAuth) :
+class AuthenticationDataSourceImpl(
+    private val firebaseAuth: FirebaseAuth,
+    private val firestoreData: FirestoreData
+) :
     AuthenticationDataSource {
 
     override suspend fun signInWithEmailAndPassword(
@@ -32,6 +37,7 @@ class AuthenticationDataSourceImpl(private val firebaseAuth: FirebaseAuth) :
     }
 
     override suspend fun signUpWithEmailAndPassword(
+        fullName: String,
         email: String,
         password: String
     ): NetworkStatus<UserProfile> {
@@ -43,6 +49,7 @@ class AuthenticationDataSourceImpl(private val firebaseAuth: FirebaseAuth) :
                 NullPointerException(),
                 "The user is null"
             )
+            firestoreData.addUserProfile(data.user!!.asUserProfile(fullName))
             NetworkStatus.Success(data.user!!.asUserProfile())
         } catch (e: FirebaseAuthException) {
             NetworkStatus.Error(e, e.message ?: "An Error occurred")
@@ -56,10 +63,13 @@ class AuthenticationDataSourceImpl(private val firebaseAuth: FirebaseAuth) :
                 .signInWithCredential(credentials)
                 .await()
 
-            if (data.user == null) return NetworkStatus.Error(NullPointerException(), "Null user")
+            if (data.user != null) {
+                if (data.additionalUserInfo?.isNewUser == true) {
+                    firestoreData.addUserProfile(data.user!!.asUserProfile())
+                }
+            } else return NetworkStatus.Error(NullPointerException(), "Null user")
 
             NetworkStatus.Success(data.user!!.asUserProfile())
-
         } catch (e: Exception) {
             NetworkStatus.Error(e, e.message ?: "")
         }
@@ -69,27 +79,29 @@ class AuthenticationDataSourceImpl(private val firebaseAuth: FirebaseAuth) :
         return if (firebaseAuth.currentUser == null) {
             null
         } else {
-            firebaseAuth.currentUser!!.asUserProfile()
+            firestoreData.getUserProfile(firebaseAuth.currentUser!!.uid)
+                ?: firebaseAuth.currentUser!!.asUserProfile()
         }
     }
 
-    fun signOut() {
+    override fun signOut() {
         firebaseAuth.signOut()
+
     }
+
+    suspend fun getToken() =
+        firebaseAuth.currentUser?.getIdToken(true)?.await()?.token
 }
 
-suspend fun FirebaseUser.asUserProfile(): UserProfile {
+fun FirebaseUser.asUserProfile(displayName: String = ""): UserProfile {
     var provider: ProviderType = ProviderType.BASIC
     var userName = ""
     providerData.forEach {
         if (it.providerId == "google.com") provider = ProviderType.GOOGLE
-        userName = it.displayName ?: "No Username"
+        userName = it.displayName ?: displayName
     }
-
-    val token = getIdToken(true).await().token
-
     return UserProfile(
-        this.uid, token ?: "no token", userName, this.email ?: "No email", this.photoUrl, provider
+        this.uid, userName, this.email ?: "No email", this.photoUrl.toString(), provider
     )
 
 }

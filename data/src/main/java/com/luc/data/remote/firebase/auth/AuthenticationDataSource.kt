@@ -10,6 +10,7 @@ interface AuthenticationDataSource {
     ): NetworkStatus<UserProfile>
 
     suspend fun signUpWithEmailAndPassword(
+        fullName: String,
         email: String,
         password: String
     ): NetworkStatus<UserProfile>
@@ -17,4 +18,6 @@ interface AuthenticationDataSource {
     suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile>
 
     suspend fun getUserLogged(): UserProfile?
+
+    fun signOut()
 }

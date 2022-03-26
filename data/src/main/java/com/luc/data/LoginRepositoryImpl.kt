@@ -22,10 +22,11 @@ class LoginRepositoryImpl(
     }
 
     override suspend fun signUpWithEmailAndPassword(
+        fullName: String,
         email: String,
         password: String
     ): NetworkStatus<UserProfile> {
-        return authenticationDataSource.signUpWithEmailAndPassword(email, password)
+        return authenticationDataSource.signUpWithEmailAndPassword(email, password, fullName)
     }
 
     override suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile> {
@@ -34,6 +35,10 @@ class LoginRepositoryImpl(
 
     override suspend fun getUserLogged(): UserProfile? {
         return authenticationDataSource.getUserLogged()
+    }
+
+    override fun signOut() {
+        authenticationDataSource.signOut()
     }
 
 }

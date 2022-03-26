@@ -1,7 +1,7 @@
 package com.luc.domain.usecases
 
-import com.luc.domain.DomainRepository
+import com.luc.common.model.UserProfile
+import com.luc.domain.FirestoreRepository
 
-class GetUserUseCase(private val domainRepository: DomainRepository) {
-    suspend fun getUser(id: String) = domainRepository.getUser(id)
+class GetUserUseCase(private val firestoreRepository: FirestoreRepository) {
 }

@@ -5,13 +5,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_height="match_parent"
         app:paddingBottomSystemWindowInsets="@{true}"
         app:paddingTopSystemWindowInsets="@{true}"
         tools:context=".ui.login.RegisterLoginFragment">
 
         <FrameLayout
-
             android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -84,6 +85,7 @@
                     android:textAppearance="?attr/textAppearanceBody2" />
 
                 <com.luc.phonespecs.customviews.CustomEditText
+                    android:id="@+id/fullNameInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:editTextHint="Full name"
@@ -91,6 +93,7 @@
                     app:typeEditText="Your name" />
 
                 <com.luc.phonespecs.customviews.CustomEditText
+                    android:id="@+id/emailInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:editTextHint="Your email adress"
@@ -98,11 +101,19 @@
                     app:typeEditText="Email adress" />
 
                 <com.luc.phonespecs.customviews.CustomEditText
+                    android:id="@+id/passwordInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:editTextHint="Password"
+                    app:editTextHint="@string/password_validate"
                     app:inputType="PASSWORD"
                     app:typeEditText="Password" />
+
+                <TextView
+                    android:id="@+id/invalidUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAppearance="?attr/errorTextAppearance" />
 
             </LinearLayout>
 
@@ -145,6 +156,18 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_3"
+                android:layout_marginTop="@dimen/grid_2"
+                android:layout_marginEnd="@dimen/grid_3"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

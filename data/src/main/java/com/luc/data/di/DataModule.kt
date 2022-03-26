@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.luc.data.ApiServiceRepositoryImpl
-import com.luc.data.DomainRepositoryImpl
+import com.luc.data.FirestoreRepositoryImpl
 import com.luc.data.LoginRepositoryImpl
 import com.luc.data.local.LocalDataSource
 import com.luc.data.local.LocalDatabase
@@ -17,7 +17,6 @@ import com.luc.data.remote.firebase.auth.AuthenticationDataSourceImpl
 import com.luc.data.remote.firebase.firestore.FirestoreData
 import com.luc.data.remote.firebase.firestore.FirestoreDataImpl
 import com.luc.domain.ApiServiceRepository
-import com.luc.domain.DomainRepository
 import com.luc.domain.LoginRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
@@ -72,14 +71,14 @@ val repositoryModule = module {
         )
     }
     factory { LocalDataSource(get()) }
-    factory<DomainRepository> { DomainRepositoryImpl(firestoreData = get(), get()) }
+    factory<com.luc.domain.FirestoreRepository> { FirestoreRepositoryImpl(firestoreData = get(), get()) }
     factory<LoginRepository> { LoginRepositoryImpl(firestoreData = get(), get(), get()) }
     factory<ApiServiceRepository> { ApiServiceRepositoryImpl(get()) }
 }
 
 val authenticationModule = module {
     single { FirebaseAuth.getInstance() }
-    single<AuthenticationDataSource> { AuthenticationDataSourceImpl(get()) }
+    single<AuthenticationDataSource> { AuthenticationDataSourceImpl(get(), get()) }
 }
 
 val dataModule = listOf(repositoryModule, firebaseModule, roomModule, authenticationModule, retrofitModule)

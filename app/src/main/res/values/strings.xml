@@ -14,4 +14,7 @@
     <string name="hello_there_login_to_continue">Hello there, login to continue</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_does_not_exists">User with this email doesn\'t exists</string>
+    <string name="user_invalid_password">The password is incorrect</string>
+    <string name="password_validate">At least 1 uppercase and number</string>
 </resources>

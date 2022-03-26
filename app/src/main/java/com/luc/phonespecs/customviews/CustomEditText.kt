@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.util.Patterns
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.withStyledAttributes
 import com.luc.phonespecs.R
@@ -97,9 +98,14 @@ class CustomEditText @JvmOverloads constructor(
         }
     }
 
-    fun editTextHasError() : Boolean {
+    fun editTextHasError(): Boolean {
         binding.editText.clearFocus()
+        if (binding.editText.text.isEmpty()) return true
         return binding.editText.error != null
+    }
+
+    fun getEditText(): EditText {
+        return binding.editText
     }
 }
 

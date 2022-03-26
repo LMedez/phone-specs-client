@@ -6,31 +6,34 @@
     app:startDestination="@id/splashScreenFragment">
 
     <fragment
-        android:id="@+id/navContainer"
+        android:id="@+id/createUser"
         android:name="com.luc.phonespecs.ui.login.RegisterLoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_register_login" >
+        tools:layout="@layout/fragment_register_login">
         <action
             android:id="@+id/action_navContainer_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph.xml" />
     </fragment>
     <fragment
         android:id="@+id/signInLoginFragment"
         android:name="com.luc.phonespecs.ui.login.SignInLoginFragment"
         android:label="fragment_sign_in_login"
-        tools:layout="@layout/fragment_sign_in_login" >
+        tools:layout="@layout/fragment_sign_in_login">
         <action
             android:id="@+id/action_signInLoginFragment_to_loginFragment"
-            app:destination="@id/navContainer" />
+            app:destination="@id/createUser" />
         <action
             android:id="@+id/action_signInLoginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph.xml" />
     </fragment>
     <fragment
+
         android:id="@+id/homeFragment"
         android:name="com.luc.phonespecs.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <argument
             android:name="userProfile"
             app:argType="com.luc.common.model.UserProfile" />
@@ -39,12 +42,14 @@
         android:id="@+id/splashScreenFragment"
         android:name="com.luc.phonespecs.ui.splash.SplashScreenFragment"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/action_splashScreenFragment_to_signInLoginFragment"
-            app:destination="@id/signInLoginFragment" />
+            app:destination="@id/signInLoginFragment"
+            app:popUpTo="@id/nav_graph.xml" />
         <action
             android:id="@+id/action_splashScreenFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph.xml" />
     </fragment>
 </navigation>

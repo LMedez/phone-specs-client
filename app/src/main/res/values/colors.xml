@@ -12,7 +12,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="pink_800">#fedbd0</color>
     <color name="brown_400">#583d34</color>
+    <color name="red_800">#FD5D5D</color>
     <color name="black">#FF000000</color>
+
     <color name="white">#FFFFFFFF</color>
 
     <!--background protection for nav-bar, varied on Q+-->

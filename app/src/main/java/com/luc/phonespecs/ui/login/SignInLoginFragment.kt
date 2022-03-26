@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
@@ -11,12 +12,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.luc.common.NetworkStatus
 import com.luc.phonespecs.R
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentSignInLoginBinding
 import com.luc.presentation.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 
 class SignInLoginFragment :
@@ -43,13 +48,44 @@ class SignInLoginFragment :
 
         binding.login.setOnClickListener {
             if (binding.emailInput.editTextHasError() or binding.passwordInput.editTextHasError()) {
-                Log.d("tests", "error")
+
+            } else {
+                loginViewModel.signInWithEmailAndPassword(
+                    binding.emailInput.getEditText().text.toString(),
+                    binding.passwordInput.getEditText().text.toString()
+                ).observe(viewLifecycleOwner) {
+                    when (it) {
+                        is NetworkStatus.Loading -> {
+                            binding.loading.show()
+                        }
+                        is NetworkStatus.Error -> {
+                            binding.loading.hide()
+                            binding.invalidUser.text = getErrorMessage(it.exception as FirebaseAuthException)
+                        }
+                        is NetworkStatus.Success -> {
+                            binding.loading.hide()
+                            findNavController().navigate(
+                                SignInLoginFragmentDirections.actionSignInLoginFragmentToHomeFragment(
+                                    it.data
+                                )
+                            )
+                        }
+                    }
+                }
             }
 
         }
 
         binding.googleSignIn.setOnClickListener {
             getContent.launch(googleSignInClient.signInIntent)
+        }
+    }
+
+    private fun getErrorMessage(exception: FirebaseAuthException): String {
+        return when (exception) {
+            is FirebaseAuthInvalidCredentialsException -> getString(R.string.user_invalid_password)
+            is FirebaseAuthInvalidUserException -> getString(R.string.user_does_not_exists)
+            else -> exception.message ?: ""
         }
     }
 
@@ -83,6 +119,8 @@ class SignInLoginFragment :
                                         )
                                     }
                                     is NetworkStatus.Error -> {
+                                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                                            .show()
                                         binding.loading.hide()
                                     }
                                 }

@@ -111,6 +111,13 @@
                     app:inputType="PASSWORD"
                     app:typeEditText="Password" />
 
+                <TextView
+                    android:id="@+id/invalidUser"
+                    android:textAppearance="?attr/errorTextAppearance"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
 
             <LinearLayout

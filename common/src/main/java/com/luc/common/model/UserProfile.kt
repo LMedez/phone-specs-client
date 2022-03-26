@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserProfile(
     val uId: String = "",
-    val tokenId: String = "",
     val userName: String = "",
     val email: String = "",
-    val photoUri: Uri?,
+    val photoUri: String? = "",
     val providerType: ProviderType = ProviderType.BASIC
-) : Parcelable
+) : Parcelable {
+}
