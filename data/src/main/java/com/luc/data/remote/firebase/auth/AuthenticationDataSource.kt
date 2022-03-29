@@ -21,5 +21,7 @@ interface AuthenticationDataSource {
 
     suspend fun getUserLogged(): UserProfile?
 
+    suspend fun getToken(): String?
+
     fun signOut()
 }

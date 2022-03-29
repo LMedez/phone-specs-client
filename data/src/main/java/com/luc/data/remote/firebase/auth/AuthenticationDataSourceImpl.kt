@@ -104,7 +104,8 @@ class AuthenticationDataSourceImpl(
 
     }
 
-    suspend fun getToken() =
+    override suspend fun getToken() =
+
         firebaseAuth.currentUser?.getIdToken(true)?.await()?.token
 }
 
