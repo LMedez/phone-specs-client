@@ -3,20 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutFullscreen="@{true}"
         tools:context=".MainActivity">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/createUser"
+        <fragment
+            android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph" />
 
-    </LinearLayout>
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:contentInsetStart="0.0dip"
+            android:contentInsetLeft="0dp"
+            android:visibility="invisible"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:paddingStart="@dimen/grid_2"
+            android:paddingEnd="@dimen/grid_2"
+            app:fabAlignmentMode="center"
+            app:fabCradleMargin="@dimen/bottom_app_bar_fab_cradle_margin"
+            app:fabCradleRoundedCornerRadius="@dimen/bottom_app_bar_fab_cradle_corner_radius"
+            app:hideOnScroll="true"
+            app:menu="@menu/bottom_app_bar_menu_right">
+
+            <androidx.appcompat.widget.ActionMenuView
+                android:id="@+id/additional_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize" />
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{null}"
+            android:visibility="invisible"
+            app:layout_anchor="@id/bottomAppBar"
+            app:srcCompat="@drawable/ic_search" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

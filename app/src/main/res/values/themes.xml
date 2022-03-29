@@ -17,6 +17,9 @@
         <item name="linearProgressIndicatorStyle">@style/Widget.App.LinearProgressIndicator</item>
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
+        <item name="bottomAppBarStyle">@style/Widget.App.BottomAppBar</item>
+
         <!--Platform attributes-->
         <item name="android:statusBarColor">@color/immersive_sys_ui</item>
         <item name="android:navigationBarColor">@color/nav_bar</item>
@@ -45,6 +48,12 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
+    <style name="ThemeOverlay.App.BottomAppBar" parent="">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/blue_600</item>
+    </style>
+
+
     <style name="ThemeOverlay.App.Button.Google" parent="">
         <item name="colorPrimary">@color/white</item>
         <item name="colorOnPrimary">@color/color_primary_dark_alpha</item>
@@ -62,5 +71,11 @@
 
     <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">
         <item name="colorPrimary">@color/orange_400</item>
+    </style>
+
+    <style name="ThemeOverlay.App.FloatingActionButton" parent="">
+        <item name="colorSecondary">@color/blue_600</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
     </style>
 </resources>

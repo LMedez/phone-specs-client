@@ -10,5 +10,12 @@
     <dimen name="grid_6">62dp</dimen>
 
     <dimen name="corner_radius_4">50dp</dimen>
+    <dimen name="corner_radius_2">24dp</dimen>
     <dimen name="corner_radius_1">16dp</dimen>
+    <dimen name="bottom_app_bar_fab_cradle_corner_radius">32dp</dimen>
+    <dimen name="bottom_app_bar_fab_cradle_margin">8dp</dimen>
+
+    <dimen name="container_1">66dp</dimen>
+    <dimen name="container_2">152dp</dimen>
+
 </resources>

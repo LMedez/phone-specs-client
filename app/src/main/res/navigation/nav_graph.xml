@@ -6,7 +6,7 @@
     app:startDestination="@id/splashScreenFragment">
 
     <fragment
-        android:id="@+id/createUser"
+        android:id="@+id/fragmentContainer"
         android:name="com.luc.phonespecs.ui.login.RegisterLoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_register_login">
@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_sign_in_login">
         <action
             android:id="@+id/action_signInLoginFragment_to_loginFragment"
-            app:destination="@id/createUser" />
+            app:destination="@id/fragmentContainer" />
         <action
             android:id="@+id/action_signInLoginFragment_to_homeFragment"
             app:destination="@id/homeFragment"

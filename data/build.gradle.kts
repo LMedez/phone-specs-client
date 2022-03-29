@@ -25,4 +25,10 @@ dependencies {
     implementation(Deps.Retrofit.CORE)
     implementation(Deps.Retrofit.GSON)
     kapt(Deps.AndroidX.Room.COMPILER)
+
+    testImplementation(TestDeps.AndroidX.Arch.CORE_TESTING)
+    testImplementation(TestDeps.JUnit.JUNIT)
+    testImplementation(TestDeps.Truth.TRUTH)
+    testImplementation(TestDeps.Mockito.CORE)
+    testImplementation(TestDeps.Mockito.MOCK_K)
 }
