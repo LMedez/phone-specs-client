@@ -20,6 +20,7 @@
         <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
         <item name="bottomAppBarStyle">@style/Widget.App.BottomAppBar</item>
         <item name="tabStyle">@style/Widget.App.TabLayout</item>
+       <!-- <item name="circularProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>-->
 
         <!--Platform attributes-->
         <item name="android:statusBarColor">@color/immersive_sys_ui</item>
@@ -75,7 +76,7 @@
     </style>
 
     <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">
-        <item name="colorPrimary">@color/orange_400</item>
+        <item name="colorPrimary">@color/orange_200</item>
     </style>
 
     <style name="ThemeOverlay.App.FloatingActionButton" parent="">

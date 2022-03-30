@@ -1,23 +1,15 @@
 package com.luc.phonespecs.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.luc.common.NetworkStatus
-import com.luc.phonespecs.R
+import com.google.android.material.tabs.TabLayout
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentHomeBinding
 import com.luc.phonespecs.ui.home.adapter.BestCameraPhonesAdapter
 import com.luc.phonespecs.ui.home.adapter.LatestPhonesAdapter
-import com.luc.presentation.viewmodel.LoginViewModel
 import com.luc.presentation.viewmodel.PhonesViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
@@ -42,7 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             bestCameraPhonesAdapter.submitList(it)
         }
 
-        phonesViewModel.isFetchingData.observe(viewLifecycleOwner) {
+        phonesViewModel.isFetchingPhones.observe(viewLifecycleOwner) {
             if (it) {
                 binding.contentContainer.visibility = View.INVISIBLE
                 binding.loading.show()
@@ -51,5 +43,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 binding.loading.hide()
             }
         }
+
+        phonesViewModel.error.observe(viewLifecycleOwner) {
+
+        }
+
+        phonesViewModel.isFetchingPhonesBestCamera.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loadingbestCamera.show()
+                binding.cameraRv.animate().alpha(0.2f).setDuration(300)
+            } else {
+                binding.loadingbestCamera.hide()
+                binding.cameraRv.animate().alpha(1f)
+            }
+
+        }
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                phonesViewModel.setBestCameraBrand(tab?.text.toString())
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+        })
     }
 }

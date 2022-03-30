@@ -14,28 +14,42 @@ class PhonesViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewMode
     private val _bestCameraPhones = MutableLiveData<List<PhoneDetail>>()
     val bestCameraPhones: LiveData<List<PhoneDetail>> = _bestCameraPhones
 
-    private val _isFetchingData = MutableLiveData<Boolean>()
-    val isFetchingData: LiveData<Boolean> = _isFetchingData
+    private val _isFetchingPhones = MutableLiveData<Boolean>()
+    val isFetchingPhones: LiveData<Boolean> = _isFetchingPhones
+
+    private val _isFetchingPhonesBestCamera = MutableLiveData<Boolean>()
+    val isFetchingPhonesBestCamera: LiveData<Boolean> = _isFetchingPhonesBestCamera
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
     init {
         viewModelScope.launch {
-            _isFetchingData.value = true
+            _isFetchingPhones.value = true
             val latestPhones = async { getPhonesUseCase.getLatestPhones() }
             val bestCameraPhones = async { getPhonesUseCase.getWithBestCamera() }
 
             val (resLatest, resBest) = awaitAll(latestPhones, bestCameraPhones)
 
             if (resLatest is NetworkStatus.Success && resBest is NetworkStatus.Success) {
-                _isFetchingData.value = false
                 _latestPhones.value = resLatest.data!!
                 _bestCameraPhones.value = resBest.data!!
             } else {
-                _isFetchingData.value = false
                 _error.value = getError(resLatest, resBest)
             }
+
+            _isFetchingPhones.value = false
+        }
+    }
+
+    fun setBestCameraBrand(brand: String) {
+        _isFetchingPhonesBestCamera.value = true
+        viewModelScope.launch {
+            when (val data = getPhonesUseCase.getWithBestCamera(brand = brand)) {
+                is NetworkStatus.Error -> _error.value = getError(data)
+                is NetworkStatus.Success -> _bestCameraPhones.value = data.data!!
+            }
+            _isFetchingPhonesBestCamera.value = false
         }
     }
 
