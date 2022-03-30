@@ -19,6 +19,7 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
         <item name="bottomAppBarStyle">@style/Widget.App.BottomAppBar</item>
+        <item name="tabStyle">@style/Widget.App.TabLayout</item>
 
         <!--Platform attributes-->
         <item name="android:statusBarColor">@color/immersive_sys_ui</item>
@@ -46,6 +47,10 @@
 
     <style name="Theme.Splash" parent="Theme.PhoneSpecs">
         <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TabLayout" parent="">
+        <item name="colorPrimary">?attr/colorSecondary</item>
     </style>
 
     <style name="ThemeOverlay.App.BottomAppBar" parent="">

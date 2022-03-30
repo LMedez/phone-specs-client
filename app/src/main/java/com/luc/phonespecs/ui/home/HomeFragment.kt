@@ -33,26 +33,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.userProfile = args.userProfile
         binding.latestRv.adapter = latestPhonesAdapter
         binding.cameraRv.adapter = bestCameraPhonesAdapter
-        phonesViewModel.getLatestPhones().observe(viewLifecycleOwner) {
-            when(it){
-                NetworkStatus.Loading -> {}
-                is NetworkStatus.Error -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()}
-                is NetworkStatus.Success -> {
-                    latestPhonesAdapter.submitList(it.data)
-                }
-            }
+
+        phonesViewModel.latestPhones.observe(viewLifecycleOwner) {
+            latestPhonesAdapter.submitList(it)
         }
 
-        phonesViewModel.getWithBestCamera().observe(viewLifecycleOwner) {
-            when(it){
-                NetworkStatus.Loading -> {}
-                is NetworkStatus.Error -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()}
-                is NetworkStatus.Success -> {
+        phonesViewModel.bestCameraPhones.observe(viewLifecycleOwner) {
+            bestCameraPhonesAdapter.submitList(it)
+        }
 
-                    bestCameraPhonesAdapter.submitList(it.data)
-                }
+        phonesViewModel.isFetchingData.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.contentContainer.visibility = View.INVISIBLE
+                binding.loading.show()
+            } else {
+                binding.contentContainer.visibility = View.VISIBLE
+                binding.loading.hide()
             }
         }
     }
