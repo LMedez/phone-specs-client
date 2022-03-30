@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="phoneDetail"
             type="com.luc.common.model.phonespecs.PhoneDetail" />
@@ -10,17 +11,20 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        app:cardElevation="0dp"
-        app:cardCornerRadius="@dimen/corner_radius_2"
-        android:padding="@dimen/grid_2"
+        android:layout_margin="@dimen/grid_1"
+        android:backgroundTint="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/corner_radius_2"
+        app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="@dimen/grid_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
+                app:srcUrl="@{phoneDetail.thumbnail}"
                 android:id="@+id/phoneImage"
                 android:layout_width="@dimen/image_2"
                 android:layout_height="@dimen/image_2"
@@ -29,30 +33,34 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                app:layout_constraintStart_toEndOf="@+id/phoneImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/phoneImage"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:layout_marginTop="@dimen/grid_0_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{phoneDetail.name}"
                     android:textAppearance="?attr/textAppearanceSubtitle1" />
 
                 <TextView
+                    android:layout_marginTop="@dimen/grid_0_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{phoneDetail.name}"
+                    android:text="@{String.format(phoneDetail.brand + ` | ` + phoneDetail.models[0])}"
                     android:textAppearance="?attr/textAppearanceBody2" />
 
                 <TextView
+                    android:layout_marginTop="@dimen/grid_0_5"
+                    android:id="@+id/cameraDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{phoneDetail.name}"
-                    android:textAppearance="?attr/textAppearanceSubtitle2" />
+                    android:textAppearance="@style/TextAppearance.App.Subtitle3"
+                    android:textColor="?attr/colorPrimary" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

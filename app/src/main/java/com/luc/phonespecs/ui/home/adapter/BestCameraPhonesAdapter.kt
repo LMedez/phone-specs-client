@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.luc.common.model.phonespecs.PhoneDetail
 import com.luc.phonespecs.R
 import com.luc.phonespecs.databinding.PhoneDetailItem1Binding
+import com.luc.phonespecs.databinding.PhoneDetailItem2Binding
 
 class BestCameraPhonesAdapter :
     ListAdapter<PhoneDetail, BestCameraPhonesAdapter.ViewHolder>(CalderaDiffCallback) {
@@ -33,11 +34,14 @@ class BestCameraPhonesAdapter :
         val phoneDetail = currentList[position]
         holder.bind(phoneDetail)
     }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding = PhoneDetailItem1Binding.bind(view)
+        private val binding = PhoneDetailItem2Binding.bind(view)
 
         fun bind(phoneDetail: PhoneDetail) {
             binding.phoneDetail = phoneDetail
+            binding.cameraDescription.text =
+                phoneDetail.backCamera?.mp?.joinToString { s: String -> "$s | " }?.replace(",", "")
         }
     }
 

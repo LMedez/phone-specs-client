@@ -45,7 +45,9 @@ class ApiServiceDataSource(
                     "Unauthorized: miss token or token is null"
                 ), "token error"
             )
-            val data = apiService.getWithBestCamera(token, limit, brand).body()
+
+            val bearerToken = "Bearer $token"
+            val data = apiService.getWithBestCamera(bearerToken, limit, brand).body()
             if (data.isNullOrEmpty()) return NetworkStatus.Error(
                 null,
                 "Error fetching data from server"

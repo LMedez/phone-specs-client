@@ -33,6 +33,7 @@ class LatestPhonesAdapter :
         val phoneDetail = currentList[position]
         holder.bind(phoneDetail)
     }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = PhoneDetailItem1Binding.bind(view)
 
