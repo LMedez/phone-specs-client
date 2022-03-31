@@ -2,39 +2,44 @@ package com.luc.phonespecs.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentHomeBinding
 import com.luc.phonespecs.ui.home.adapter.BestCameraPhonesAdapter
 import com.luc.phonespecs.ui.home.adapter.LatestPhonesAdapter
-import com.luc.presentation.viewmodel.PhonesViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import com.luc.presentation.viewmodel.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val args: HomeFragmentArgs by navArgs()
-    private val phonesViewModel: PhonesViewModel by sharedViewModel()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     private val latestPhonesAdapter: LatestPhonesAdapter by lazy { LatestPhonesAdapter() }
     private val bestCameraPhonesAdapter: BestCameraPhonesAdapter by lazy { BestCameraPhonesAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        homeViewModel.fetchData()
+
         binding.userProfile = args.userProfile
         binding.latestRv.adapter = latestPhonesAdapter
         binding.cameraRv.adapter = bestCameraPhonesAdapter
 
-        phonesViewModel.latestPhones.observe(viewLifecycleOwner) {
+        homeViewModel.latestPhones.observe(viewLifecycleOwner) {
             latestPhonesAdapter.submitList(it)
         }
 
-        phonesViewModel.bestCameraPhones.observe(viewLifecycleOwner) {
+        homeViewModel.bestCameraPhones.observe(viewLifecycleOwner) {
             bestCameraPhonesAdapter.submitList(it)
         }
 
-        phonesViewModel.isFetchingPhones.observe(viewLifecycleOwner) {
+        homeViewModel.isFetchingPhones.observe(viewLifecycleOwner) {
             if (it) {
                 binding.contentContainer.visibility = View.INVISIBLE
                 binding.loading.show()
@@ -44,24 +49,40 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
 
-        phonesViewModel.error.observe(viewLifecycleOwner) {
-
+        homeViewModel.showErrorFragment.observe(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let { message ->
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToErrorFragment(
+                        message
+                    )
+                )
+            }
+        }
+        
+        homeViewModel.showErrorOnChangeBrand.observe(viewLifecycleOwner) {
+            Toast.makeText(
+                requireContext(),
+                "oops! something is wrong, try again later!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
-        phonesViewModel.isFetchingPhonesBestCamera.observe(viewLifecycleOwner) {
+        homeViewModel.isFetchingPhonesBestCamera.observe(viewLifecycleOwner) {
             if (it) {
                 binding.loadingbestCamera.show()
-                binding.cameraRv.animate().alpha(0.2f).setDuration(300)
+                binding.cameraRv.animate().alpha(0.2f).duration = 300
             } else {
                 binding.loadingbestCamera.hide()
                 binding.cameraRv.animate().alpha(1f)
             }
-
         }
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                phonesViewModel.setBestCameraBrand(tab?.text.toString())
+                if (tab?.text.toString() == "All") {
+                    homeViewModel.setBestCameraBrand(null)
+                } else homeViewModel.setBestCameraBrand(tab?.text.toString())
+
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -70,4 +91,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         })
     }
+
 }

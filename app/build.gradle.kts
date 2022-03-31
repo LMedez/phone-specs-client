@@ -27,7 +27,6 @@ dependencies {
 
     implementation(kotlin("stdlib"))
     implementation(Deps.AndroidX.Navigation.FRAGMENT_KTX)
-    implementation(Deps.AndroidX.Navigation.UI_KTX)
     implementation(Deps.AndroidX.AppCompat.APPCOMPAT)
     implementation(Deps.Google.Material.MATERIAL)
     implementation(Deps.AndroidX.ConstraintLayout.CL)

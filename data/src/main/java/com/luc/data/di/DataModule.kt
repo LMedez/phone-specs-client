@@ -37,7 +37,6 @@ val firebaseModule = module {
                 .build()
         } else {
             FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
                 .build()
         }
         instance.firestoreSettings = settings

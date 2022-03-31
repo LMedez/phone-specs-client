@@ -101,7 +101,6 @@ class AuthenticationDataSourceImpl(
 
     override fun signOut() {
         firebaseAuth.signOut()
-
     }
 
     override suspend fun getToken() =
@@ -112,7 +111,6 @@ class AuthenticationDataSourceImpl(
 fun FirebaseUser.asUserProfile(displayName: String = ""): UserProfile {
     var provider: ProviderType = ProviderType.BASIC
     providerData.forEach {
-        GoogleAuthProvider.PROVIDER_ID
         provider = when (it.providerId) {
             GoogleAuthProvider.PROVIDER_ID -> ProviderType.GOOGLE
             EmailAuthProvider.PROVIDER_ID -> ProviderType.BASIC

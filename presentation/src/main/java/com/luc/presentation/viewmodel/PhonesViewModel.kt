@@ -1,5 +1,6 @@
 package com.luc.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.luc.common.NetworkStatus
 import com.luc.common.model.phonespecs.PhoneDetail
@@ -23,26 +24,29 @@ class PhonesViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewMode
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    init {
-        viewModelScope.launch {
-            _isFetchingPhones.value = true
-            val latestPhones = async { getPhonesUseCase.getLatestPhones() }
-            val bestCameraPhones = async { getPhonesUseCase.getWithBestCamera() }
+    fun getData() {
+        if (_bestCameraPhones.value.isNullOrEmpty() || _latestPhones.value.isNullOrEmpty()) {
+            viewModelScope.launch {
+                _isFetchingPhones.value = true
+                _error.value = ""
+                val latestPhones = async { getPhonesUseCase.getLatestPhones() }
+                val bestCameraPhones = async { getPhonesUseCase.getWithBestCamera() }
 
-            val (resLatest, resBest) = awaitAll(latestPhones, bestCameraPhones)
+                val (resLatest, resBest) = awaitAll(latestPhones, bestCameraPhones)
 
-            if (resLatest is NetworkStatus.Success && resBest is NetworkStatus.Success) {
-                _latestPhones.value = resLatest.data!!
-                _bestCameraPhones.value = resBest.data!!
-            } else {
-                _error.value = getError(resLatest, resBest)
+                if (resLatest is NetworkStatus.Success && resBest is NetworkStatus.Success) {
+                    _latestPhones.value = resLatest.data!!
+                    _bestCameraPhones.value = resBest.data!!
+                } else {
+                    _error.value = getError(resLatest, resBest)
+                }
+
+                _isFetchingPhones.value = false
             }
-
-            _isFetchingPhones.value = false
         }
     }
 
-    fun setBestCameraBrand(brand: String) {
+    fun setBestCameraBrand(brand: String?) {
         _isFetchingPhonesBestCamera.value = true
         viewModelScope.launch {
             when (val data = getPhonesUseCase.getWithBestCamera(brand = brand)) {

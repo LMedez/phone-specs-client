@@ -15,6 +15,8 @@ dependencies {
     implementation(Deps.AndroidX.Lifecycle.VIEWMODEL_KTX)
     implementation(Deps.AndroidX.Lifecycle.LIVEDATA_KTX)
     implementation(Deps.Google.PlayCore.PLAY_SERVICES)
+    implementation(Deps.AndroidX.Navigation.FRAGMENT_KTX)
+
 
     testImplementation(TestDeps.JUnit.JUNIT)
     testImplementation(TestDeps.AndroidX.Arch.CORE_TESTING)
