@@ -1,4 +1,4 @@
-package com.luc.presentation.viewmodel
+package com.luc.presentation.utils
 
 import androidx.navigation.NavDirections
 

@@ -16,4 +16,12 @@
     <string name="user_invalid_password">The password is incorrect</string>
     <string name="password_validate">At least 1 uppercase and number</string>
     <string name="cancel">Cancel</string>
+    <string name="find_phone">Find your perfect phone</string>
+    <string name="search_suggestion_hint">Search by brand, model, etc</string>
+
+    <string-array name="categories">
+        <item>Smartphone</item>
+        <item>Tablet</item>
+        <item>Watch</item>
+    </string-array>
 </resources>

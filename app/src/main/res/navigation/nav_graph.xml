@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_homeFragment_to_errorFragment"
             app:destination="@id/errorFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_selectionSearchFragment"
+            app:destination="@id/selectionSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"
@@ -63,4 +66,17 @@
             android:name="errorMessage"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/selectionSearchFragment"
+        android:name="com.luc.phonespecs.ui.search.SelectionSearchFragment"
+        android:label="SelectionSearchFragment" >
+        <action
+            android:id="@+id/action_selectionSearchFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.luc.phonespecs.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

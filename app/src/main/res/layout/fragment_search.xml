@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        app:marginTopSystemWindowInsets="@{true}"
+        android:background="?attr/colorSurface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.search.SearchFragment">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/search_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:paddingLeft="@dimen/grid_1"
+            android:paddingRight="@dimen/grid_1"
+            android:transitionName="shared_element_container"
+            app:contentInsetStartWithNavigation="0dp"
+            app:navigationIcon="@drawable/ic_arrow_back">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/search_suggestion_hint"
+                    android:imeOptions="flagNoExtractUi|actionSearch"
+                    android:inputType="textNoSuggestions" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </FrameLayout>
+</layout>

@@ -45,6 +45,14 @@
         <item name="tabTextAppearance">@style/TextAppearance.App.Caption</item>
     </style>
 
+    <style name="Widget.App.Chip" parent="Widget.MaterialComponents.Chip.Entry">
+        <item name="closeIconTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.CardView</item>
+    </style>
+
 
     <style name="Widget.App.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:minHeight">60dp</item>

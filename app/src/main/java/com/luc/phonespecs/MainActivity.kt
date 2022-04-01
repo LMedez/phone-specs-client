@@ -2,15 +2,16 @@ package com.luc.phonespecs
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.google.android.material.transition.MaterialElevationScale
 import com.luc.phonespecs.databinding.ActivityMainBinding
+import com.luc.phonespecs.ui.home.HomeFragmentDirections
 import com.luc.phonespecs.utils.contentView
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -56,13 +57,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 duration = resources.getInteger(R.integer.reply_motion_duration_large).toLong()
             }
         }
-        /*val directions = ComposeFragmentDirections.actionGlobalComposeFragment(currentEmailId)
-        findNavController(R.id.nav_host_fragment).navigate(directions)*/
+        val directions = HomeFragmentDirections.actionHomeFragmentToSelectionSearchFragment()
+        findNavController(R.id.nav_host_fragment).navigate(directions)
     }
 
 
-    private fun setBottomAppBarForHome() {
+    private fun setBottomAppBarForSearch() {
         hideBottomAppBar()
+        binding.fab.hide()
     }
 
 
@@ -101,9 +103,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 binding.fab.show()
             }
 
-           /* R.id.searchFragment -> {
-                setBottomAppBarForHome()
-            }*/
+            R.id.selectionSearchFragment -> {
+                setBottomAppBarForSearch()
+            }
         }
     }
 }

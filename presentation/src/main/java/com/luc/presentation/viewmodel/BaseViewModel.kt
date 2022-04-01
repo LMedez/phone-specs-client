@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.luc.common.Event
+import com.luc.presentation.utils.NavigationCommand
 
 abstract class BaseViewModel : ViewModel() {
     private val _navigation = MutableLiveData<Event<NavigationCommand>>()
