@@ -33,15 +33,15 @@
         android:name="com.luc.phonespecs.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
-        <argument
-            android:name="userProfile"
-            app:argType="com.luc.common.model.UserProfile" />
-        <action
-            android:id="@+id/action_homeFragment_to_errorFragment"
-            app:destination="@id/errorFragment" />
         <action
             android:id="@+id/action_homeFragment_to_selectionSearchFragment"
             app:destination="@id/selectionSearchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_errorFragment"
+            app:destination="@id/errorFragment" />
+        <argument
+            android:name="userProfile"
+            app:argType="com.luc.common.model.UserProfile" />
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"

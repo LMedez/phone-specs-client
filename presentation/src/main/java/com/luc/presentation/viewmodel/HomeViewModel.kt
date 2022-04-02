@@ -1,13 +1,12 @@
 package com.luc.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.luc.common.Event
 import com.luc.common.NetworkStatus
 import com.luc.common.model.phonespecs.PhoneDetail
 import com.luc.domain.usecases.GetPhonesUseCase
+import com.luc.domain.usecases.LATEST_PHONES
+import com.luc.domain.usecases.WITH_BEST_CAMERA
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
@@ -15,11 +14,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewModel() {
 
 
-    private val _latestPhones = MutableLiveData<List<PhoneDetail>>()
-    val latestPhones: LiveData<List<PhoneDetail>> = _latestPhones
-
-    private val _bestCameraPhones = MutableLiveData<List<PhoneDetail>>()
-    val bestCameraPhones: LiveData<List<PhoneDetail>> = _bestCameraPhones
+    private val _getPhones = MutableLiveData<Map<String, List<PhoneDetail>>>()
+    val getPhones: LiveData<Map<String, List<PhoneDetail>>> = _getPhones
 
     private val _isFetchingPhones = MutableLiveData<Boolean>()
     val isFetchingPhones: LiveData<Boolean> = _isFetchingPhones
@@ -27,29 +23,34 @@ class HomeViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewModel(
     private val _isFetchingPhonesBestCamera = MutableLiveData<Boolean>()
     val isFetchingPhonesBestCamera: LiveData<Boolean> = _isFetchingPhonesBestCamera
 
-    private val _showErrorFragment = MutableLiveData<Event<String>>()
-    val showErrorFragment: LiveData<Event<String>> = _showErrorFragment
+    private val _navigateToError = MutableLiveData<Event<String>>()
+    val navigateToError: LiveData<Event<String>> = _navigateToError
 
     private val _showErrorOnChangeBrand = MutableLiveData<Event<String>>()
     val showErrorOnChangeBrand: LiveData<Event<String>> = _showErrorOnChangeBrand
 
-    fun fetchData() {
-        if (_bestCameraPhones.value.isNullOrEmpty() || _latestPhones.value.isNullOrEmpty())
-            viewModelScope.launch {
-                _isFetchingPhones.value = true
-                val latestPhones = async { getPhonesUseCase.getLatestPhones() }
-                val bestCameraPhones = async { getPhonesUseCase.getWithBestCamera() }
+    fun getPhones() {
+        _isFetchingPhones.value = true
+        viewModelScope.launch {
 
-                val (resLatest, resBest) = awaitAll(latestPhones, bestCameraPhones)
-
-                if (resLatest is NetworkStatus.Success && resBest is NetworkStatus.Success) {
-                    _latestPhones.value = resLatest.data!!
-                    _bestCameraPhones.value = resBest.data!!
-                } else {
-                    _showErrorFragment.value = Event(getError(resBest, resLatest))
+            val phoneData = getPhonesUseCase.getLatestAndBest()
+            when {
+                phoneData[LATEST_PHONES] is NetworkStatus.Error -> {
+                    _navigateToError.value =
+                        Event((phoneData[LATEST_PHONES] as NetworkStatus.Error).message)
                 }
-                _isFetchingPhones.value = false
+                phoneData[WITH_BEST_CAMERA] is NetworkStatus.Error -> {
+                    _navigateToError.value =
+                        Event((phoneData[WITH_BEST_CAMERA] as NetworkStatus.Error).message)
+                }
+                else ->
+                    _getPhones.value = mapOf(
+                        LATEST_PHONES to (phoneData[LATEST_PHONES] as NetworkStatus.Success).data,
+                        WITH_BEST_CAMERA to (phoneData[WITH_BEST_CAMERA] as NetworkStatus.Success).data
+                    )
             }
+            _isFetchingPhones.value = false
+        }
     }
 
     fun setBestCameraBrand(brand: String?) {
@@ -57,7 +58,10 @@ class HomeViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewModel(
         viewModelScope.launch {
             when (val data = getPhonesUseCase.getWithBestCamera(brand = brand)) {
                 is NetworkStatus.Error -> _showErrorOnChangeBrand.value = Event(getError(data))
-                is NetworkStatus.Success -> _bestCameraPhones.value = data.data!!
+                is NetworkStatus.Success -> _getPhones.value = mapOf(
+                    LATEST_PHONES to _getPhones.value?.get(LATEST_PHONES)!!,
+                    WITH_BEST_CAMERA to data.data
+                )
             }
             _isFetchingPhonesBestCamera.value = false
         }

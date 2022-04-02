@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/grid_2"
-                android:entries="@array/categories"
+                android:entries="@array/price"
                 app:text="Price" />
 
             <com.luc.phonespecs.customviews.ButtonMenu
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/grid_2"
-                android:entries="@array/categories"
+                android:entries="@array/brand"
                 app:text="Brand" />
 
             <com.luc.phonespecs.customviews.ButtonMenu
@@ -104,41 +104,48 @@
         </LinearLayout>
 
         <LinearLayout
-            android:paddingStart="@dimen/grid_3"
-            android:background="@color/blue_50"
-            android:layout_marginTop="@dimen/grid_3"
+            android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/grid_3"
+            android:background="@color/blue_50"
+            android:paddingStart="@dimen/grid_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
             <ImageButton
-                app:tint="?attr/colorPrimary"
-                android:padding="@dimen/grid_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/grid_1"
                 android:src="@drawable/ic_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                app:tint="?attr/colorPrimary" />
 
             <HorizontalScrollView
-                android:scrollbarThumbHorizontal="@null"
-                android:scrollbarSize="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/grid_1"
-                android:scrollbars="none"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:scrollbarSize="0dp"
+                android:scrollbarThumbHorizontal="@null"
+                android:scrollbars="none">
 
                 <com.google.android.material.chip.ChipGroup
-                    android:layout_marginTop="4dp"
                     android:id="@+id/chipGroup"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp" />
             </HorizontalScrollView>
-
-
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,7 +6,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentErrorBinding
-import com.luc.phonespecs.ui.home.HomeFragmentArgs
 
 private const val ERROR_MESSAGE = "param1"
 

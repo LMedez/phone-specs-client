@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
+import com.luc.domain.usecases.LATEST_PHONES
+import com.luc.domain.usecases.WITH_BEST_CAMERA
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentHomeBinding
 import com.luc.phonespecs.ui.home.adapter.BestCameraPhonesAdapter
@@ -16,27 +18,24 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val args: HomeFragmentArgs by navArgs()
     private val homeViewModel: HomeViewModel by viewModel()
-
+    private val args: HomeFragmentArgs by navArgs()
     private val latestPhonesAdapter: LatestPhonesAdapter by lazy { LatestPhonesAdapter() }
     private val bestCameraPhonesAdapter: BestCameraPhonesAdapter by lazy { BestCameraPhonesAdapter() }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel.getPhones()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        homeViewModel.fetchData()
-
-        binding.userProfile = args.userProfile
         binding.latestRv.adapter = latestPhonesAdapter
         binding.cameraRv.adapter = bestCameraPhonesAdapter
-
-        homeViewModel.latestPhones.observe(viewLifecycleOwner) {
-            latestPhonesAdapter.submitList(it)
-        }
-
-        homeViewModel.bestCameraPhones.observe(viewLifecycleOwner) {
-            bestCameraPhonesAdapter.submitList(it)
+        binding.userProfile = args.userProfile
+        homeViewModel.getPhones.observe(viewLifecycleOwner) {
+            latestPhonesAdapter.submitList(it[LATEST_PHONES])
+            bestCameraPhonesAdapter.submitList(it[WITH_BEST_CAMERA])
         }
 
         homeViewModel.isFetchingPhones.observe(viewLifecycleOwner) {
@@ -49,16 +48,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
 
-        homeViewModel.showErrorFragment.observe(viewLifecycleOwner) {
+        homeViewModel.navigateToError.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { message ->
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToErrorFragment(
-                        message
-                    )
-                )
+                 findNavController().navigate(
+                     HomeFragmentDirections.actionHomeFragmentToErrorFragment(
+                         message
+                     )
+                 )
             }
         }
-        
+
         homeViewModel.showErrorOnChangeBrand.observe(viewLifecycleOwner) {
             Toast.makeText(
                 requireContext(),

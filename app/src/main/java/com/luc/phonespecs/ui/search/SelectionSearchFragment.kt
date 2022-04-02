@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import androidx.navigation.fragment.findNavController
 import androidx.transition.Slide
 import com.google.android.material.chip.Chip
@@ -26,13 +28,13 @@ class SelectionSearchFragment :
         }
 
         binding.run {
-            category.setOnClick { text ->
-                chipGroup.addView(createChip(text))
-            }
-            price.setOnClick { }
-            brand.setOnClick { }
+            chipGroup.addView(createChip("Max $250"))
+            chipGroup.addView(createChip("Samsung"))
+            chipGroup.addView(createChip("Smartphone"))
+            category.setOnClick { text -> chipGroup.addView(createChip(text)) }
+            price.setOnClick { text -> chipGroup.addView(createChip(text)) }
+            brand.setOnClick { text -> chipGroup.addView(createChip(text)) }
         }
-
 
         binding.run {
             // Set transitions here so we are able to access Fragment's binding views.
@@ -60,8 +62,20 @@ class SelectionSearchFragment :
         chip.text = text
         chip.closeIcon = requireContext().getDrawableOrNull(R.drawable.ic_close)
         chip.isCheckable = false
-        chip.setOnCloseIconClickListener{
-            binding.chipGroup.removeView(chip)
+        chip.setOnCloseIconClickListener {
+            val anim = AlphaAnimation(1f, 0f)
+            anim.duration = 250
+            anim.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {}
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    binding.chipGroup.removeView(it)
+                }
+
+                override fun onAnimationStart(animation: Animation?) {}
+            })
+
+            it.startAnimation(anim)
         }
         return chip
     }

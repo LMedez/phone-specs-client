@@ -48,6 +48,8 @@ class ButtonMenu @JvmOverloads constructor(
                     click(textArray[position].toString())
                 }
 
+                listPopupWindow.dismiss()
+
             }
         }
     }

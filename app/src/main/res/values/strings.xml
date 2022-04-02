@@ -24,4 +24,18 @@
         <item>Tablet</item>
         <item>Watch</item>
     </string-array>
+
+    <string-array name="brand">
+        <item>Samsung</item>
+        <item>Xiaomi</item>
+        <item>Apple</item>
+    </string-array>
+
+    <string-array name="price">
+        <item>Max $120</item>
+        <item>Max $240</item>
+        <item>Max $320</item>
+        <item>Max $520</item>
+        <item>Max $670</item>
+    </string-array>
 </resources>
