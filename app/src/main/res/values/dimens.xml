@@ -16,6 +16,7 @@
     <dimen name="bottom_app_bar_fab_cradle_margin">8dp</dimen>
 
     <dimen name="container_1">66dp</dimen>
+    <dimen name="container_4">96dp</dimen>
     <dimen name="container_2">152dp</dimen>
     <dimen name="container_3">236dp</dimen>
 

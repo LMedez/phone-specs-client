@@ -58,6 +58,7 @@
                     app:tint="@color/color_primary_dark_alpha" />
 
                 <EditText
+                    android:focusable="false"
                     android:id="@+id/search"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

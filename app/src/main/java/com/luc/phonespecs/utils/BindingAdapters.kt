@@ -21,10 +21,11 @@ import kotlin.reflect.KProperty
 
 @BindingAdapter("srcUrl", "circleCrop", "placeholder", requireAll = false)
 fun ImageView.bindSrcUrl(
-    url: String,
+    url: String?,
     circleCrop: Boolean,
     placeholder: Drawable?,
 ) {
+    if (url.isNullOrEmpty()) return
     val request = Glide.with(this).load(url)
     if (circleCrop) request.circleCrop()
     if (placeholder != null) request.placeholder(placeholder)

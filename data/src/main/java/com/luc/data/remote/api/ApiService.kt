@@ -24,7 +24,7 @@ interface ApiService {
     suspend fun search(
         @Header("Authorization") token: String,
         @Query("limit") limit: Int? = null,
-        @Query("search") search: String? = null
+        @Query("query") search: String? = null
     ): Response<List<PhoneDetail>>
 
 }

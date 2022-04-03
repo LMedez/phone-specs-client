@@ -25,7 +25,7 @@
 
     <style name="Widget.App.CircularProgressIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>
-        <item name="trackThickness">20dp</item>
+        <!--<item name="trackThickness">20dp</item>-->
     </style>
 
     <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.MaterialComponents">

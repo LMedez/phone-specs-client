@@ -1,4 +1,4 @@
-package com.luc.phonespecs.ui.home.adapter
+package com.luc.phonespecs.ui.search.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.luc.common.model.phonespecs.PhoneDetail
 import com.luc.phonespecs.R
-import com.luc.phonespecs.databinding.PhoneDetailItem1Binding
+import com.luc.phonespecs.databinding.PhoneDetailItem3Binding
+import com.luc.phonespecs.utils.getDrawableOrNull
 
-class LatestPhonesAdapter :
-    ListAdapter<PhoneDetail, LatestPhonesAdapter.ViewHolder>(PhonesDiffCallback) {
+class SearchResultAdapter :
+    ListAdapter<PhoneDetail, SearchResultAdapter.ViewHolder>(PhonesDiffCallback) {
 
     private var onClick: ((PhoneDetail) -> Unit)? = null
 
@@ -23,7 +24,7 @@ class LatestPhonesAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.phone_detail_item_1, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.phone_detail_item_3, parent, false)
         return ViewHolder(view)
     }
 
@@ -33,10 +34,15 @@ class LatestPhonesAdapter :
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding = PhoneDetailItem1Binding.bind(view)
-
-        fun bind(phoneDetail: PhoneDetail) {
+        private val binding = PhoneDetailItem3Binding.bind(view)
+        fun bind(phoneDetail: PhoneDetail) = with(binding) {
             binding.phoneDetail = phoneDetail
+            if (phoneDetail.software?.os != "Android") {
+                osImage.background = osImage.context.getDrawableOrNull(R.drawable.ic_apple)
+            }
+            os.text = "OS ${phoneDetail.software?.os?: "Not Provided"}"
+            internal.text = "Internal Memory ${phoneDetail.hardware?.memory?.internal?.get(0)}"
+            price.text = "Global Price ${phoneDetail.price?.get(0)?: "Not Provided"}"
         }
     }
 
@@ -49,5 +55,7 @@ class LatestPhonesAdapter :
             return oldItem == newItem
         }
     }
+
+
 }
 

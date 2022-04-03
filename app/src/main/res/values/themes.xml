@@ -22,7 +22,7 @@
         <item name="tabStyle">@style/Widget.App.TabLayout</item>
         <item name="popupMenuBackground">@drawable/custom_popup_background</item>
         <item name="chipStyle">@style/Widget.App.Chip</item>
-       <!-- <item name="circularProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>-->
+        <item name="circularProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>
 
         <!--Platform attributes-->
         <item name="android:statusBarColor">@color/immersive_sys_ui</item>

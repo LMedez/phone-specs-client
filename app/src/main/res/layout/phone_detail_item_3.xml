@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="phoneDetail"
+            type="com.luc.common.model.phonespecs.PhoneDetail" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:clipChildren="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/grid_1">
+
+        <com.google.android.material.card.MaterialCardView
+            app:cardElevation="0dp"
+            android:id="@+id/materialCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/grid_2"
+            android:layout_marginTop="@dimen/grid_3"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/grid_2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/phoneName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{phoneDetail.name}"
+                    android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+                <TextView
+                    android:id="@+id/brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{phoneDetail.brand}"
+                    android:textAppearance="@style/TextAppearance.App.Body3" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/grid_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_money"
+                        app:tint="?attr/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/grid_1"
+                        android:textAppearance="@style/TextAppearance.App.Body3"
+                        android:textColor="?attr/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_1">
+
+                    <ImageView
+                        android:background="@drawable/ic_android"
+                        android:id="@+id/osImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="?attr/colorPrimary"/>
+
+                    <TextView
+                        android:id="@+id/os"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/grid_1"
+                        android:textAppearance="@style/TextAppearance.App.Body3"
+                        android:textColor="?attr/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_memory"
+                        app:tint="?attr/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/internal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/grid_1"
+                        android:textAppearance="@style/TextAppearance.App.Body3"
+                        android:textColor="?attr/colorPrimary" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            app:cardCornerRadius="@dimen/corner_radius_1"
+            android:id="@+id/phoneImageContainer"
+            app:cardElevation="0dp"
+            android:layout_width="@dimen/container_2"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/grid_4"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/phoneImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/grid_1"
+                android:layout_marginHorizontal="@dimen/grid_0_5"
+                app:srcUrl="@{phoneDetail.thumbnail}" />
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
