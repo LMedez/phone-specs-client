@@ -11,4 +11,9 @@ interface ApiServiceRepository {
         brand: String? = null
     ): NetworkStatus<List<PhoneDetail>>
 
+    suspend fun search(
+        limit: Int? = null,
+        search: String? = null
+    ): NetworkStatus<List<PhoneDetail>>
+
 }

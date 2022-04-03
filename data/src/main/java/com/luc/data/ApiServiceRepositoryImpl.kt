@@ -1,5 +1,6 @@
 package com.luc.data
 
+import com.google.firebase.auth.ktx.oAuthProvider
 import com.luc.common.NetworkStatus
 import com.luc.common.model.phonespecs.PhoneDetail
 import com.luc.data.remote.api.ApiService
@@ -21,6 +22,10 @@ class ApiServiceRepositoryImpl(private val apiService: ApiServiceDataSource) :
         brand: String?
     ): NetworkStatus<List<PhoneDetail>> {
         return apiService.getWithBestCamera(limit, brand)
+    }
+
+    override suspend fun search(limit: Int?, search: String?): NetworkStatus<List<PhoneDetail>> {
+        return apiService.search(limit, search)
     }
 }
 

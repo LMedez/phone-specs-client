@@ -29,6 +29,11 @@ class GetPhonesUseCase(private val apiServiceRepository: ApiServiceRepository) {
             mapOf(LATEST_PHONES to resLatest, WITH_BEST_CAMERA to resBest)
         }
     }
+
+    suspend fun search(
+        limit: Int? = null,
+        search: String? = null
+    ) = apiServiceRepository.search(limit, search)
 }
 
 const val LATEST_PHONES = "latestPhones"

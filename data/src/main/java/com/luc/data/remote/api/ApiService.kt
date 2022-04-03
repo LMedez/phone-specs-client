@@ -19,4 +19,12 @@ interface ApiService {
         @Query("limit") limit: Int? = null,
         @Query("brand") brand: String? = null
     ): Response<List<PhoneDetail>>
+
+    @GET("search")
+    suspend fun search(
+        @Header("Authorization") token: String,
+        @Query("limit") limit: Int? = null,
+        @Query("search") search: String? = null
+    ): Response<List<PhoneDetail>>
+
 }

@@ -1,19 +1,31 @@
 package com.luc.phonespecs.ui.search
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.Slide
+import androidx.transition.TransitionManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.platform.Hold
+import com.google.android.material.transition.platform.MaterialElevationScale
+import com.google.android.material.transition.platform.MaterialSharedAxis
 import com.luc.phonespecs.R
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentSelectionSearchBinding
 import com.luc.phonespecs.utils.getDrawableOrNull
+import com.luc.phonespecs.utils.lerp
 import com.luc.phonespecs.utils.themeColor
 
 class SelectionSearchFragment :
@@ -22,9 +34,20 @@ class SelectionSearchFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.floating.setOnClickListener {
-            findNavController().navigate(SelectionSearchFragmentDirections.actionSelectionSearchFragmentToSearchFragment())
+        binding.searchView.setOnClickListener {
+            val extras = FragmentNavigatorExtras(binding.searchView to "shared_element_container")
+            findNavController().navigate(
+                R.id.action_selectionSearchFragment_to_searchFragment,
+                null,
+                null,
+                extras
+            )
+            exitTransition = MaterialSharedAxis(/* growing= */ MaterialSharedAxis.Y,true).apply {
+                duration = resources.getInteger(R.integer.reply_motion_duration_medium).toLong()
+            }
+            reenterTransition = MaterialElevationScale(/* growing= */ true).apply {
+                duration = resources.getInteger(R.integer.reply_motion_duration_medium).toLong()
+            }
         }
 
         binding.run {

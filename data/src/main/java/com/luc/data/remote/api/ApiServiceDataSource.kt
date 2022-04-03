@@ -58,4 +58,26 @@ class ApiServiceDataSource(
         }
     }
 
+    suspend fun search(limit: Int? = null, search: String? = null): NetworkStatus<List<PhoneDetail>> {
+        return try {
+            val token = authenticationDataSource.getToken()
+            if (token.isNullOrEmpty()) return NetworkStatus.Error(
+                FirebaseAuthException(
+                    "404",
+                    "Unauthorized: miss token or token is null"
+                ), "token error"
+            )
+
+            val bearerToken = "Bearer $token"
+            val data = apiService.search(bearerToken, limit, search).body()
+            if (data.isNullOrEmpty()) return NetworkStatus.Error(
+                null,
+                "Error fetching data from server"
+            )
+            NetworkStatus.Success(data)
+        } catch (e: Exception) {
+            NetworkStatus.Error(e, e.message ?: "null message")
+        }
+    }
+
 }

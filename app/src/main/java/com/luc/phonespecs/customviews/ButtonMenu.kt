@@ -40,7 +40,9 @@ class ButtonMenu @JvmOverloads constructor(
             listPopupWindow.setAdapter(adapter)
 
             setOnClickListener {
-                listPopupWindow.show()
+                if (listPopupWindow.isShowing)
+                    listPopupWindow.dismiss()
+                else listPopupWindow.show()
             }
 
             listPopupWindow.setOnItemClickListener { adapterView, view, position, l ->
@@ -49,7 +51,6 @@ class ButtonMenu @JvmOverloads constructor(
                 }
 
                 listPopupWindow.dismiss()
-
             }
         }
     }
