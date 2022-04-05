@@ -21,6 +21,8 @@ class BaseApplication : Application() {
             isFirebaseLocal = true
         }
 
+        isFirebaseLocal = false
+
         initKoin()
     }
 
