@@ -87,6 +87,7 @@ val repositoryModule = module {
             firestore = get(),
         )
     }
+
     factory { LocalDataSource(get()) }
     factory<com.luc.domain.FirestoreRepository> {
         FirestoreRepositoryImpl(
@@ -94,6 +95,7 @@ val repositoryModule = module {
             get()
         )
     }
+
     factory { ApiServiceDataSource(get(), get()) }
 
     factory<LoginRepository> { LoginRepositoryImpl(firestoreData = get(), get(), get()) }
@@ -106,7 +108,7 @@ val authenticationModule = module {
         if (isFirebaseLocal) auth.useEmulator("10.0.2.2", 9099)
         auth
     }
-    single<AuthenticationDataSource> { AuthenticationDataSourceImpl(get(), get()) }
+    single<AuthenticationDataSource> { AuthenticationDataSourceImpl(get()) }
 }
 
 val dataModule =

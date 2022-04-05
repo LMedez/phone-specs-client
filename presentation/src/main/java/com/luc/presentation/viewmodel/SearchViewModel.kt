@@ -21,7 +21,7 @@ class SearchViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewMode
         _isSearching.value = true
         when (val searchResult = getPhonesUseCase.search(search = query)) {
             is NetworkStatus.Success -> _searchResult.value = searchResult.data!!
-            is NetworkStatus.Error -> _showErrorMessage.value = searchResult.message
+            is NetworkStatus.Error -> _showErrorMessage.value = searchResult.errorCode
         }
         _isSearching.value = false
     }

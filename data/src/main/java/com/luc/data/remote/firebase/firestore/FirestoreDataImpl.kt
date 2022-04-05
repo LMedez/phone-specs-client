@@ -8,13 +8,8 @@ import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
 class FirestoreDataImpl(private val firestore: FirebaseFirestore) : FirestoreData {
-    override suspend fun addUserProfile(userProfile: UserProfile): NetworkStatus<UserProfile> {
-        return try {
-            firestore.collection("users").add(userProfile).await()
-            NetworkStatus.Success(userProfile)
-        } catch (e: FirebaseFirestoreException) {
-            NetworkStatus.Error(e, e.message ?: "Error on add new user")
-        }
+    override suspend fun addUserProfile(userProfile: UserProfile) {
+        firestore.collection("users").add(userProfile).await()
     }
 
     override suspend fun getUserProfile(uid: String): UserProfile? {

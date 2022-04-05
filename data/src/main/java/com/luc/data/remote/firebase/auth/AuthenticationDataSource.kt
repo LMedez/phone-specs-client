@@ -1,5 +1,6 @@
 package com.luc.data.remote.firebase.auth
 
+import com.google.firebase.auth.FirebaseUser
 import com.luc.common.NetworkStatus
 import com.luc.common.model.UserProfile
 
@@ -7,19 +8,19 @@ interface AuthenticationDataSource {
     suspend fun signInWithEmailAndPassword(
         email: String,
         password: String
-    ): NetworkStatus<UserProfile>
+    ): FirebaseUser?
 
     suspend fun signUpWithEmailAndPassword(
         fullName: String,
         email: String,
         password: String
-    ): NetworkStatus<UserProfile>
+    ): FirebaseUser?
 
-    suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile>
+    suspend fun signInWithGoogle(token: String): FirebaseUser?
 
-    suspend fun signInAnonymous(userName: String): NetworkStatus<UserProfile>
+    suspend fun signInAnonymous(): FirebaseUser?
 
-    suspend fun getUserLogged(): UserProfile?
+    fun getUserLogged(): FirebaseUser?
 
     suspend fun getToken(): String?
 

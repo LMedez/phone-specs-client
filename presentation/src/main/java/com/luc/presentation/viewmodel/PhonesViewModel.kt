@@ -1,6 +1,5 @@
 package com.luc.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.luc.common.NetworkStatus
 import com.luc.common.model.phonespecs.PhoneDetail
@@ -61,7 +60,7 @@ class PhonesViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewMode
         var result = ""
         networkStatus.forEach {
             if (it is NetworkStatus.Error) {
-                result = it.message
+                result = it.errorCode
             }
         }
         return result

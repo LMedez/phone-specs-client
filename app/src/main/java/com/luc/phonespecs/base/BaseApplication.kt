@@ -20,7 +20,6 @@ class BaseApplication : Application() {
         if(BuildConfig.DEBUG) {
             isFirebaseLocal = true
         }
-        isFirebaseLocal = false
 
         initKoin()
     }

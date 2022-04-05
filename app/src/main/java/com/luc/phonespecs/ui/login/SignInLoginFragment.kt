@@ -2,14 +2,12 @@ package com.luc.phonespecs.ui.login
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -20,12 +18,11 @@ import com.luc.common.NetworkStatus
 import com.luc.phonespecs.R
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.customviews.CustomEditText
-import com.luc.phonespecs.databinding.CustomEditTextBinding
 import com.luc.phonespecs.databinding.FragmentSignInLoginBinding
+import com.luc.phonespecs.utils.authErrors
 import com.luc.presentation.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.Exception
+import kotlin.math.log
 
 
 class SignInLoginFragment :
@@ -50,35 +47,28 @@ class SignInLoginFragment :
             findNavController().navigate(SignInLoginFragmentDirections.actionSignInLoginFragmentToLoginFragment())
         }
 
-        binding.anonymous.setOnClickListener {
-            val editText = CustomEditText(requireContext())
-            editText.setTypeEditText("User name")
-            MaterialAlertDialogBuilder(requireContext())
-                .setView(editText)
-                .setPositiveButton(resources.getString(R.string.sign_in)) { dialog, which ->
-                    loginViewModel.signInAnonymous(editText.getEditText().text.toString())
-                        .observe(viewLifecycleOwner) {
-                            when (it) {
-                                NetworkStatus.Loading -> binding.loading.show()
-                                is NetworkStatus.Error -> {
-                                    binding.loading.hide()
-                                }
-                                is NetworkStatus.Success -> {
-                                    binding.loading.hide()
-                                    findNavController().navigate(
-                                        SignInLoginFragmentDirections.actionSignInLoginFragmentToHomeFragment(
-                                            it.data
-                                        )
-                                    )
+        loginViewModel.navigateToHome.observe(viewLifecycleOwner) {
+            findNavController().navigate(
+                SignInLoginFragmentDirections.actionSignInLoginFragmentToHomeFragment(
+                    it
+                )
+            )
+        }
 
-                                }
-                            }
-                        }
-                }
-                .setNegativeButton(resources.getString(R.string.cancel)) { dialog, which ->
-                    // Respond to negative button press
-                }
-                .show()
+        loginViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) binding.loading.show()
+            else binding.loading.hide()
+        }
+
+        loginViewModel.showError.observe(viewLifecycleOwner) {
+            binding.loading.hide()
+            Toast.makeText(requireContext(), authErrors(it), Toast.LENGTH_SHORT).show()
+        }
+
+        binding.anonymous.setOnClickListener {
+
+            loginViewModel.signInAnonymous()
+
         }
 
         binding.login.setOnClickListener {
@@ -88,39 +78,12 @@ class SignInLoginFragment :
                 loginViewModel.signInWithEmailAndPassword(
                     binding.emailInput.getEditText().text.toString(),
                     binding.passwordInput.getEditText().text.toString()
-                ).observe(viewLifecycleOwner) {
-                    when (it) {
-                        is NetworkStatus.Loading -> {
-                            binding.loading.show()
-                        }
-                        is NetworkStatus.Error -> {
-                            binding.loading.hide()
-                            binding.invalidUser.text =
-                                getErrorMessage(it.exception as FirebaseAuthException)
-                        }
-                        is NetworkStatus.Success -> {
-                            binding.loading.hide()
-                            findNavController().navigate(
-                                SignInLoginFragmentDirections.actionSignInLoginFragmentToHomeFragment(
-                                    it.data
-                                )
-                            )
-                        }
-                    }
-                }
+                )
             }
         }
 
         binding.googleSignIn.setOnClickListener {
             getContent.launch(loginViewModel.googleSignInClient?.signInIntent)
-        }
-    }
-
-    private fun getErrorMessage(exception: FirebaseAuthException): String {
-        return when (exception) {
-            is FirebaseAuthInvalidCredentialsException -> getString(R.string.user_invalid_password)
-            is FirebaseAuthInvalidUserException -> getString(R.string.user_does_not_exists)
-            else -> exception.message ?: ""
         }
     }
 
@@ -140,30 +103,6 @@ class SignInLoginFragment :
                     val account = task.getResult(ApiException::class.java)
                     if (account != null) {
                         loginViewModel.signInWithGoogle(account.idToken!!)
-                            .observe(viewLifecycleOwner) {
-                                when (it) {
-                                    NetworkStatus.Loading -> {
-                                        binding.loading.show()
-                                    }
-                                    is NetworkStatus.Success -> {
-                                        binding.loading.hide()
-                                        findNavController().navigate(
-                                            SignInLoginFragmentDirections.actionSignInLoginFragmentToHomeFragment(
-                                                it.data
-                                            )
-                                        )
-                                    }
-                                    is NetworkStatus.Error -> {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            it.message,
-                                            Toast.LENGTH_SHORT
-                                        )
-                                            .show()
-                                        binding.loading.hide()
-                                    }
-                                }
-                            }
                     }
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately

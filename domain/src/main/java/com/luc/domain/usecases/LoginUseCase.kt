@@ -21,7 +21,7 @@ class LoginUseCase(private val loginRepository: LoginRepository) {
     suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile> =
         loginRepository.signInWithGoogle(token)
 
-    suspend fun signInAnonymous(userName :String) = loginRepository.signInAnonymous(userName)
+    suspend fun signInAnonymous() = loginRepository.signInAnonymous()
 
     suspend fun getUserLogged() = loginRepository.getUserLogged()
 

@@ -1,7 +1,6 @@
 package com.luc.domain
 
 import com.luc.common.NetworkStatus
-import com.luc.common.model.User
 import com.luc.common.model.UserProfile
 
 interface LoginRepository {
@@ -18,7 +17,7 @@ interface LoginRepository {
 
     suspend fun signInWithGoogle(token: String): NetworkStatus<UserProfile>
 
-    suspend fun signInAnonymous(userName: String): NetworkStatus<UserProfile>
+    suspend fun signInAnonymous(): NetworkStatus<UserProfile>
 
     suspend fun getUserLogged(): UserProfile?
 

@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="@{userProfile.userName}"
+                        android:text="@{userProfile.userName?? `Hi Anonimous User`}"
                         android:textAppearance="?attr/textAppearanceSubtitle1" />
 
                     <ImageView

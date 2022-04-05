@@ -7,8 +7,6 @@ import com.luc.common.model.phonespecs.PhoneDetail
 import com.luc.domain.usecases.GetPhonesUseCase
 import com.luc.domain.usecases.LATEST_PHONES
 import com.luc.domain.usecases.WITH_BEST_CAMERA
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewModel() {
@@ -37,11 +35,11 @@ class HomeViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewModel(
             when {
                 phoneData[LATEST_PHONES] is NetworkStatus.Error -> {
                     _navigateToError.value =
-                        Event((phoneData[LATEST_PHONES] as NetworkStatus.Error).message)
+                        Event((phoneData[LATEST_PHONES] as NetworkStatus.Error).errorCode)
                 }
                 phoneData[WITH_BEST_CAMERA] is NetworkStatus.Error -> {
                     _navigateToError.value =
-                        Event((phoneData[WITH_BEST_CAMERA] as NetworkStatus.Error).message)
+                        Event((phoneData[WITH_BEST_CAMERA] as NetworkStatus.Error).errorCode)
                 }
                 else ->
                     _getPhones.value = mapOf(
@@ -71,7 +69,7 @@ class HomeViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewModel(
         var result = ""
         networkStatus.forEach {
             if (it is NetworkStatus.Error) {
-                result = it.message
+                result = it.errorCode
             }
         }
         return result

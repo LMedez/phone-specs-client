@@ -1,14 +1,16 @@
 package com.luc.phonespecs.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.luc.common.NetworkStatus
+import com.luc.phonespecs.R
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentRegisterLoginBinding
 import com.luc.presentation.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.log
 
 class RegisterLoginFragment :
@@ -24,7 +26,23 @@ class RegisterLoginFragment :
             signIn.setOnClickListener {
                 findNavController().popBackStack()
             }
+            loginViewModel.navigateToHome.observe(viewLifecycleOwner) {
+                findNavController().navigate(
+                    RegisterLoginFragmentDirections.actionNavContainerToHomeFragment(
+                        it
+                    )
+                )
+            }
 
+            loginViewModel.showError.observe(viewLifecycleOwner) {
+                binding.loading.hide()
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+
+            loginViewModel.isLoading.observe(viewLifecycleOwner) {
+                if (it) loading.show()
+                else loading.hide()
+            }
             createAccount.setOnClickListener {
                 if (emailInput.editTextHasError() or passwordInput.editTextHasError()) {
 
@@ -33,23 +51,7 @@ class RegisterLoginFragment :
                         fullNameInput.getEditText().text.toString(),
                         emailInput.getEditText().text.toString(),
                         passwordInput.getEditText().text.toString()
-                    ).observe(viewLifecycleOwner) {
-                        when (it) {
-                            is NetworkStatus.Loading -> loading.show()
-                            is NetworkStatus.Error -> {
-                                invalidUser.text = it.message
-                                loading.hide()
-                            }
-                            is NetworkStatus.Success -> {
-                                loading.hide()
-                                findNavController().navigate(
-                                    RegisterLoginFragmentDirections.actionNavContainerToHomeFragment(
-                                        it.data
-                                    )
-                                )
-                            }
-                        }
-                    }
+                    )
                 }
             }
         }
