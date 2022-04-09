@@ -32,7 +32,7 @@ class LoginRepositoryImpl(
                 return NetworkStatus.Success(userFromFirestore)
             } else NetworkStatus.Success(user)
         } catch (e: Exception) {
-            handlerExceptions(e)
+            exceptionsHandler(e)
         }
     }
 
@@ -48,7 +48,7 @@ class LoginRepositoryImpl(
             firestoreData.addUserProfile(user.asUserProfile(fullName))
             NetworkStatus.Success(user.asUserProfile())
         } catch (e: Exception) {
-            handlerExceptions(e)
+            exceptionsHandler(e)
         }
     }
 
@@ -67,7 +67,7 @@ class LoginRepositoryImpl(
             }
             return NetworkStatus.Success(localDataSource.getUser(firebaseUser.uid)!!)
         } catch (e: Exception) {
-            handlerExceptions(e)
+            exceptionsHandler(e)
         }
     }
 
@@ -75,7 +75,7 @@ class LoginRepositoryImpl(
         return try {
             NetworkStatus.Success(authenticationDataSource.signInAnonymous()!!.asUserProfile())
         }catch (e: Exception) {
-            handlerExceptions(e)
+            exceptionsHandler(e)
         }
     }
 
@@ -87,7 +87,7 @@ class LoginRepositoryImpl(
         authenticationDataSource.signOut()
     }
 
-    private fun handlerExceptions(exception: Exception): NetworkStatus<UserProfile> =
+    private fun exceptionsHandler(exception: Exception): NetworkStatus<UserProfile> =
         when (exception) {
             is FirebaseAuthException -> NetworkStatus.Error(exception, exception.errorCode)
             is FirebaseFirestoreException -> NetworkStatus.Error(
@@ -96,7 +96,6 @@ class LoginRepositoryImpl(
             )
             else -> NetworkStatus.Error(exception, "Unexpected error occurred")
         }
-
 }
 
 

@@ -7,3 +7,4 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class FooEntity(@PrimaryKey val id: String)
+

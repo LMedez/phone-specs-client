@@ -30,7 +30,6 @@ class HomeViewModel(private val getPhonesUseCase: GetPhonesUseCase) : ViewModel(
     fun getPhones() {
         _isFetchingPhones.value = true
         viewModelScope.launch {
-
             val phoneData = getPhonesUseCase.getLatestAndBest()
             when {
                 phoneData[LATEST_PHONES] is NetworkStatus.Error -> {
