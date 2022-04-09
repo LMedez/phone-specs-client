@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.transition.platform.MaterialSharedAxis
 import com.luc.domain.usecases.LATEST_PHONES
 import com.luc.domain.usecases.WITH_BEST_CAMERA
+import com.luc.phonespecs.R
 import com.luc.phonespecs.base.BaseFragment
 import com.luc.phonespecs.databinding.FragmentHomeBinding
 import com.luc.phonespecs.ui.home.adapter.BestCameraPhonesAdapter
@@ -33,6 +35,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.latestRv.adapter = latestPhonesAdapter
         binding.cameraRv.adapter = bestCameraPhonesAdapter
         binding.userProfile = args.userProfile
+
+        latestPhonesAdapter.setOnClick {
+            setUpTransition()
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToPhoneDetail(
+                    it
+                )
+            )
+        }
         homeViewModel.getPhones.observe(viewLifecycleOwner) {
             latestPhonesAdapter.submitList(it[LATEST_PHONES])
             bestCameraPhonesAdapter.submitList(it[WITH_BEST_CAMERA])
@@ -50,11 +61,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         homeViewModel.navigateToError.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { message ->
-                 findNavController().navigate(
-                     HomeFragmentDirections.actionHomeFragmentToErrorFragment(
-                         message
-                     )
-                 )
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToErrorFragment(
+                        message
+                    )
+                )
             }
         }
 
@@ -89,6 +100,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             override fun onTabReselected(tab: TabLayout.Tab?) {}
 
         })
+    }
+
+    private fun setUpTransition() {
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true).apply {
+            duration = resources.getInteger(R.integer.reply_motion_duration_medium).toLong()
+        }
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false).apply {
+            duration = resources.getInteger(R.integer.reply_motion_duration_medium).toLong()
+
+        }
     }
 
 }

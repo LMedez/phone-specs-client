@@ -2,6 +2,10 @@ package com.luc.phonespecs.utils
 
 
 import android.app.Activity
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Shader
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
@@ -15,21 +19,54 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.elevation.ElevationOverlayProvider
 import kotlin.reflect.KProperty
 
 
-@BindingAdapter("srcUrl", "circleCrop", "placeholder", requireAll = false)
+@BindingAdapter("srcUrl", "circleCrop", "placeholder", "repeatMode", requireAll = false)
 fun ImageView.bindSrcUrl(
     url: String?,
     circleCrop: Boolean,
     placeholder: Drawable?,
+    repeatMode: Boolean,
 ) {
     if (url.isNullOrEmpty()) return
-    val request = Glide.with(this).load(url)
-    if (circleCrop) request.circleCrop()
-    if (placeholder != null) request.placeholder(placeholder)
-    request.into(this)
+    if (!repeatMode) {
+        val request =
+            Glide.with(this).load(url)
+        if (circleCrop) request.circleCrop()
+        if (placeholder != null) request.placeholder(placeholder)
+        request.transition(DrawableTransitionOptions.withCrossFade())
+
+        request.into(this)
+    } else {
+        val request =
+            Glide.with(this).asBitmap().load(url)
+        if (circleCrop) request.circleCrop()
+        if (placeholder != null) request.placeholder(placeholder)
+        request.transition(BitmapTransitionOptions.withCrossFade())
+        request.into(customTarget(resources, this))
+    }
+}
+
+private fun customTarget(resources: Resources, imageView: ImageView) = object : CustomTarget<Bitmap>() {
+    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+        val bitmap = BitmapDrawable(resources, resource)
+        bitmap.tileModeX = Shader.TileMode.REPEAT
+        bitmap.tileModeY = Shader.TileMode.REPEAT
+        imageView.background = bitmap
+    }
+
+    override fun onLoadCleared(placeholder: Drawable?) {
+    }
+
+
 }
 
 /**

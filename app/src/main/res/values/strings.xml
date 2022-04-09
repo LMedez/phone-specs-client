@@ -62,4 +62,12 @@
 
     <string name="not_found_document">The requested data does not exists.</string>
     <string name="permission_denied">Do not have permission to execute the specified operation.</string>
+
+    <!-- api service exceptions -->
+
+    <string name="server_timeout">An error occurred when retrieving data. Please check your internet connection and try again</string>
+    <string name="unautorized_access">An error occurred verifying your account, please sign out and try again</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -96,10 +96,10 @@ val repositoryModule = module {
         )
     }
 
-    factory { ApiServiceDataSource(get(), get()) }
+    factory { ApiServiceDataSource(get()) }
 
     factory<LoginRepository> { LoginRepositoryImpl(firestoreData = get(), get(), get()) }
-    factory<ApiServiceRepository> { ApiServiceRepositoryImpl(get()) }
+    factory<ApiServiceRepository> { ApiServiceRepositoryImpl(get(), get()) }
 }
 
 val authenticationModule = module {

@@ -2,6 +2,7 @@ package com.luc.data.remote.firebase.auth
 
 import com.google.firebase.auth.*
 import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 
 
 class AuthenticationDataSourceImpl(
@@ -45,5 +46,5 @@ class AuthenticationDataSourceImpl(
     }
 
     override suspend fun getToken() =
-        firebaseAuth.currentUser?.getIdToken(true)?.await()?.token
+        firebaseAuth.currentUser?.getIdToken(true)?.await()?.token?: "Bearer"
 }

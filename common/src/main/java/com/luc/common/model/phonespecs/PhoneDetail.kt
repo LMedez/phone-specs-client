@@ -1,9 +1,11 @@
 package com.luc.common.model.phonespecs
 
-import android.provider.MediaStore.Audio
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Parcelize
 data class PhoneDetail(
     val thumbnail: String? = null,
     val name: String? = null,
@@ -21,4 +23,4 @@ data class PhoneDetail(
     val audio: Audio? = null,
     val display: Display? = null,
     val weight: String? = null,
-)
+) : Parcelable

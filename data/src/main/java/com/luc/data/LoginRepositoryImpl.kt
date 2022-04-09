@@ -74,7 +74,7 @@ class LoginRepositoryImpl(
     override suspend fun signInAnonymous(): NetworkStatus<UserProfile> {
         return try {
             NetworkStatus.Success(authenticationDataSource.signInAnonymous()!!.asUserProfile())
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             exceptionsHandler(e)
         }
     }

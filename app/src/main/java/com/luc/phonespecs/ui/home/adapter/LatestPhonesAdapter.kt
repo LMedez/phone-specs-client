@@ -36,6 +36,11 @@ class LatestPhonesAdapter :
         private val binding = PhoneDetailItem1Binding.bind(view)
 
         fun bind(phoneDetail: PhoneDetail) {
+            binding.root.setOnClickListener {
+                onClick?.let { click ->
+                    click(phoneDetail)
+                }
+            }
             binding.phoneDetail = phoneDetail
         }
     }

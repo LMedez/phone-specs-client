@@ -42,6 +42,9 @@
         <argument
             android:name="userProfile"
             app:argType="com.luc.common.model.UserProfile" />
+        <action
+            android:id="@+id/action_homeFragment_to_phoneDetail"
+            app:destination="@id/phoneDetail" />
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"
@@ -79,4 +82,12 @@
         android:name="com.luc.phonespecs.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/phoneDetail"
+        android:name="com.luc.phonespecs.ui.detail.PhoneDetailsFragment"
+        android:label="PhoneDetail" >
+        <argument
+            android:name="phoneDetail"
+            app:argType="com.luc.common.model.phonespecs.PhoneDetail" />
+    </fragment>
 </navigation>

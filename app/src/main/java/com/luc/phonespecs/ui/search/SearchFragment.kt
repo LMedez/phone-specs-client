@@ -43,8 +43,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                     TransitionManager.beginDelayedTransition(
                         binding.recentContainer,
                         MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
-                            duration = resources.getInteger(R.integer.reply_motion_duration_small)
-                                .toLong()
+                            duration = resources.getInteger(R.integer.reply_motion_duration_small).toLong()
                         })
                     binding.recentContainer.visibility = View.VISIBLE
                 }
