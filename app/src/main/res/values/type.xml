@@ -50,19 +50,23 @@
 
     <style name="TextAppearance.App.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">@font/dmsans_regular</item>
-        <item name="android:textColor">@color/color_primary_dark_alpha</item>
+        <item name="android:textColor">@color/color_primary_dark_alpha_44</item>
 
     </style>
 
     <style name="TextAppearance.App.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/dmsans_medium</item>
-        <item name="android:textColor">@color/color_primary_dark_alpha</item>
+        <item name="android:textColor">@color/color_primary_dark_alpha_44</item>
     </style>
 
     <style name="TextAppearance.App.Body3" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/dmsans_medium</item>
         <item name="android:textSize">13sp</item>
+    </style>
 
+    <style name="TextAppearance.App.Body4" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/dmsans_regular</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="TextAppearance.App.Caption" parent="TextAppearance.MaterialComponents.Caption">

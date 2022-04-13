@@ -2,7 +2,7 @@
 <resources>
     <style name="Widget.App.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:textAppearance">?attr/textAppearanceBody2</item>
-        <item name="hintTextColor">@color/color_primary_dark_alpha</item>
+        <item name="hintTextColor">@color/color_primary_dark_alpha_44</item>
     </style>
 
     <style name="Widget.App.LinearProgressIndicator" parent="Widget.MaterialComponents.LinearProgressIndicator">

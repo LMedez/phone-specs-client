@@ -64,7 +64,7 @@
 
     <style name="ThemeOverlay.App.Button.Google" parent="">
         <item name="colorPrimary">@color/white</item>
-        <item name="colorOnPrimary">@color/color_primary_dark_alpha</item>
+        <item name="colorOnPrimary">@color/color_primary_dark_alpha_44</item>
     </style>
 
     <style name="ThemeOverlay.App.Button.Anonymous" parent="">

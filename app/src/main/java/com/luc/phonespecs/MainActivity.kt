@@ -102,10 +102,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 binding.bottomAppBar.performShow()
                 binding.fab.show()
             }
-
             R.id.selectionSearchFragment -> setBottomAppBarForSearch()
-
             R.id.phoneDetail -> setBottomAppBarForSearch()
+            R.id.errorFragment -> setBottomAppBarForSearch()
 
         }
     }

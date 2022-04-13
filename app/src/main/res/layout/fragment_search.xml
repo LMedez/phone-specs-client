@@ -36,7 +36,7 @@
                     android:layout_gravity="center"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_arrow_back"
-                    app:tint="@color/color_primary_dark_alpha" />
+                    app:tint="@color/color_primary_dark_alpha_44" />
 
                 <EditText
                     android:id="@+id/search"

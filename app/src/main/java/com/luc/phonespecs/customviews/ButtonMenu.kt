@@ -2,13 +2,11 @@ package com.luc.phonespecs.customviews
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.ListPopupWindow
 import androidx.core.content.withStyledAttributes
-import com.luc.common.model.phonespecs.PhoneDetail
 import com.luc.phonespecs.R
 import com.luc.phonespecs.databinding.ButtonMenuBinding
 

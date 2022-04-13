@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        app:tint="@color/color_primary_dark_alpha"
+        app:tint="@color/color_primary_dark_alpha_44"
         android:src="@drawable/ic_access_time"
         android:layout_marginEnd="@dimen/grid_2"
         android:layout_width="wrap_content"
