@@ -63,9 +63,7 @@ private fun customTarget(resources: Resources, imageView: ImageView) = object : 
         imageView.background = bitmap
     }
 
-    override fun onLoadCleared(placeholder: Drawable?) {
-    }
-
+    override fun onLoadCleared(placeholder: Drawable?) {}
 
 }
 

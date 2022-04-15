@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="phoneDetails"
             type="com.luc.common.model.phonespecs.PhoneDetail" />
@@ -47,9 +48,9 @@
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
-            android:layout_margin="@dimen/grid_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/grid_1"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/materialCardView2"
             app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -75,35 +76,75 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView2">
 
-            <com.luc.phonespecs.customviews.CustomTable
-                android:layout_margin="@dimen/grid_2"
-                android:orientation="vertical"
-                app:title="Display"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <com.luc.phonespecs.customviews.CustomRow
-                    android:layout_marginTop="@dimen/grid_1"
-                    android:layout_marginHorizontal="@dimen/grid_2"
-                    android:layout_marginBottom="@dimen/grid_1"
-                    app:key1="Hz"
-                    app:key2="PPI"
-                    app:value1="@{phoneDetails.display.hz}"
-                    app:value2="@{phoneDetails.display.ppi}"
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/audio"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
 
-                <com.luc.phonespecs.customviews.CustomRow
-                    android:layout_marginHorizontal="@dimen/grid_2"
-                    android:layout_marginBottom="@dimen/grid_1"
-                    app:key1="some"
-                    app:key2="some"
-                    app:value1="some"
-                    app:value2="some"
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/frontCamera"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
 
-            </com.luc.phonespecs.customviews.CustomTable>
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/backCamera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
+
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/wireless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
+
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/display"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
+
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/memory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
+
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/processor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
+
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/software"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
+
+                <com.luc.phonespecs.customviews.CustomTable
+                    android:id="@+id/battery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
