@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="grid_0_2">2dp</dimen>
     <dimen name="grid_0_5">4dp</dimen>
     <dimen name="grid_1">8dp</dimen>
     <dimen name="grid_1_5">12dp</dimen>
@@ -20,6 +21,7 @@
     <dimen name="container_2">152dp</dimen>
     <dimen name="container_3">236dp</dimen>
 
+    <dimen name="image_0_5">58dp</dimen>
     <dimen name="image_1">68dp</dimen>
     <dimen name="image_2">84dp</dimen>
 

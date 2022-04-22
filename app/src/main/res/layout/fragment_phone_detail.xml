@@ -82,28 +82,27 @@
                 android:orientation="vertical">
 
                 <com.luc.phonespecs.customviews.CustomTable
-                    android:id="@+id/audio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/grid_2"
-                    android:orientation="vertical" />
-
-                <com.luc.phonespecs.customviews.CustomTable
+                    app:icon="@drawable/ic_camera"
                     android:id="@+id/frontCamera"
+                    app:title="Front Camera"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/grid_2"
                     android:orientation="vertical" />
 
                 <com.luc.phonespecs.customviews.CustomTable
+                    app:icon="@drawable/ic_camera"
                     android:id="@+id/backCamera"
+                    app:title="Back Camera"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/grid_2"
                     android:orientation="vertical" />
 
                 <com.luc.phonespecs.customviews.CustomTable
+                    app:icon="@drawable/ic_wifi"
                     android:id="@+id/wireless"
+                    app:title="Wireless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/grid_2"
@@ -111,6 +110,8 @@
 
                 <com.luc.phonespecs.customviews.CustomTable
                     android:id="@+id/display"
+                    app:icon="@drawable/ic_screen"
+                    app:title="Display"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/grid_2"
@@ -118,12 +119,16 @@
 
                 <com.luc.phonespecs.customviews.CustomTable
                     android:id="@+id/memory"
+                    app:icon="@drawable/ic_storage"
+                    app:title="Memory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/grid_2"
                     android:orientation="vertical" />
 
                 <com.luc.phonespecs.customviews.CustomTable
+                    app:icon="@drawable/ic_memory"
+                    app:title="Processor"
                     android:id="@+id/processor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -131,6 +136,7 @@
                     android:orientation="vertical" />
 
                 <com.luc.phonespecs.customviews.CustomTable
+                    app:title="Software"
                     android:id="@+id/software"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,6 +144,8 @@
                     android:orientation="vertical" />
 
                 <com.luc.phonespecs.customviews.CustomTable
+                    app:icon="@drawable/ic_battery"
+                    app:title="Battery"
                     android:id="@+id/battery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

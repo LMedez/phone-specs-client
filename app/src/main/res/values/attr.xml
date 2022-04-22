@@ -18,10 +18,7 @@
 
     <declare-styleable name="CustomTable">
         <attr name="title" format="string"/>
+        <attr name="icon" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="CustomRow">
-        <attr name="key1" format="string"/>
-        <attr name="key2" format="string"/>
-    </declare-styleable>
 </resources>
